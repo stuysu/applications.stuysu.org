@@ -10,6 +10,7 @@
 	"dependencies": {
 		"apollo-server-micro": "^2.25.2",
 		"dataloader": "^2.0.0",
+		"googleapis": "^80.1.0",
 		"graphql": "^15.5.1",
 		"mongoose": "^5.13.2",
 		"next": "11.0.1",
