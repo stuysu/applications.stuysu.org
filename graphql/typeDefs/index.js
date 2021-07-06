@@ -1,6 +1,8 @@
+import { typeDefs as graphqlScalarDefs } from "graphql-scalars";
+
 import Query from "./Query";
 import User from "./User";
 
-const typeDefs = [User, Query];
+const typeDefs = [...graphqlScalarDefs, User, Query];
 
 export default typeDefs;
