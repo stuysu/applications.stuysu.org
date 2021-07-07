@@ -25,11 +25,11 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
     );
   }
 
-  let user = await User.findbyGoogleId(idTokenPayload.sub);
+  let user = await User.findByGoogleId(idTokenPayload.sub);
 
   if (!user) {
     // Add the user to the database
-    let user = await User.create({
+    user = await User.create({
       googleUserId: idTokenPayload.sub,
       firstName: idTokenPayload.given_name,
       lastName: idTokenPayload.family_name,
@@ -39,7 +39,7 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
     });
   }
 
-  const anonymitySecret = await User.getAnonymitySecret(accessToken);
+  const anonymitySecret = await user.getAnonymitySecret(accessToken);
   const { id, firstName, lastName, email } = user;
 
   const { privateKey, passphrase } = await KeyPair.getSigningPair();

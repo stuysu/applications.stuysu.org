@@ -20,7 +20,7 @@ const UserSchema = new Schema({
 UserSchema.statics.idLoader = findOneLoaderFactory("User");
 UserSchema.statics.emailLoader = findOneLoaderFactory("User", "email");
 UserSchema.statics.findByEmail = findByEmail;
-UserSchema.methods.findByGoogleId = findByGoogleId;
+UserSchema.statics.findByGoogleId = findByGoogleId;
 
 UserSchema.methods.getAnonymitySecret = getAnonymitySecret;
 

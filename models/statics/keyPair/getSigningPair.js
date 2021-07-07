@@ -17,5 +17,5 @@ export default async function getSigningPair() {
     return currentKey;
   }
 
-  return await KeyPair.generateNewKeyPair();
+  return await KeyPair.generateNewPair();
 }
