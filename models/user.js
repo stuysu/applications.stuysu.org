@@ -2,19 +2,26 @@ import mongoose from "./mongoose";
 import findOneLoaderFactory from "../utils/dataloaders/findOneLoaderFactory";
 import findUserByEmail from "./statics/user/findByEmail";
 import getAnonymitySecret from "./methods/user/getAnonymitySecret";
+import findByEmail from "./statics/user/findByEmail";
+import findByGoogleId from "./statics/user/findByGoogleId";
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-	firstName: String,
-	lastName: String,
-	email: String,
-	googleDriveAnonymityFileId: String,
+  googleUserId: String,
+  firstName: String,
+  lastName: String,
+  email: String,
+  googleDriveAnonymityFileId: String,
+  picture: String,
+  adminPrivileges: Boolean,
 });
 
 UserSchema.statics.idLoader = findOneLoaderFactory("User");
 UserSchema.statics.emailLoader = findOneLoaderFactory("User", "email");
-UserSchema.statics.findByEmail = findUserByEmail;
+UserSchema.statics.findByEmail = findByEmail;
+UserSchema.methods.findByGoogleId = findByGoogleId;
+
 UserSchema.methods.getAnonymitySecret = getAnonymitySecret;
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
