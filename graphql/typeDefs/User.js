@@ -6,5 +6,7 @@ export default gql`
     firstName: String!
     lastName: String!
     email: EmailAddress!
+    adminPrivileges: Boolean!
+    picture: String!
   }
 `;
