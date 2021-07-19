@@ -1,0 +1,37 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.menuButton {
+  margin-right: 0.5rem;
+}
+
+.title {
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.appBar {
+  background: white;
+  color: black;
+  max-width: 1200px;
+}
+
+.tab {
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+@media (min-width: 801px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .tabs {
+    display: none;
+  }
+}

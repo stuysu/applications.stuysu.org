@@ -28,7 +28,7 @@ export default function LoginButton() {
   return (
     <GoogleLogin
       clientId={GOOGLE_CLIENT_ID}
-      buttonText="Login"
+      buttonText="Login with Google"
       onSuccess={onSignIn}
       onFailure={console.log}
       cookiePolicy={"single_host_origin"}
