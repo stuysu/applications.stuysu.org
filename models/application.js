@@ -1,5 +1,6 @@
 import findOneLoaderFactory from "../utils/dataloaders/findOneLoaderFactory";
 import mongoose from "./mongoose";
+import queryApplications from "./statics/application/queryApplications";
 
 const Schema = mongoose.Schema;
 
@@ -21,6 +22,7 @@ const ApplicationSchema = new Schema({
 });
 
 ApplicationSchema.statics.idLoader = findOneLoaderFactory("Application");
+ApplicationSchema.statics.queryApplications = queryApplications;
 
 const Application =
   mongoose.models.Application ||
