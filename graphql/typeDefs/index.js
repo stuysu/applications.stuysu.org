@@ -1,8 +1,7 @@
 import { typeDefs as graphqlScalarDefs } from "graphql-scalars";
-
+import Mutation from "./Mutation";
 import Query from "./Query";
 import User from "./User";
-import Mutation from "./Mutation";
 
 const typeDefs = [...graphqlScalarDefs, User, Query, Mutation];
 

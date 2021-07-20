@@ -1,19 +1,17 @@
-import { useContext } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
-import styles from "./TopAppBar.module.css";
-
-import CircularProgress from "@material-ui/core/CircularProgress";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import UserContext from "../auth/UserContext";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 import useLogout from "../auth/useLogout";
+import UserContext from "../auth/UserContext";
+import styles from "./TopAppBar.module.css";
 
 export default function TopAppBar({ setDrawerOpen, pages }) {
   const user = useContext(UserContext);

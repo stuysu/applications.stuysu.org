@@ -1,5 +1,5 @@
-import mongoose from "./mongoose";
 import findOneLoaderFactory from "../utils/dataloaders/findOneLoaderFactory";
+import mongoose from "./mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -16,7 +16,8 @@ const ApplicationSchema = new Schema({
   color: String,
   createdAt: Date,
   updatedAt: Date,
-  active: Boolean,
+  status: Boolean,
+  archived: Boolean,
 });
 
 ApplicationSchema.statics.idLoader = findOneLoaderFactory("Application");

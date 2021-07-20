@@ -1,9 +1,9 @@
-import { createComplexityLimitRule } from "graphql-validation-complexity";
 import { ApolloServer, ForbiddenError } from "apollo-server-micro";
-import typeDefs from "../../graphql/typeDefs";
+import { createComplexityLimitRule } from "graphql-validation-complexity";
 import resolvers from "../../graphql/resolvers";
-import getJWTData from "../../utils/auth/getJWTData";
+import typeDefs from "../../graphql/typeDefs";
 import User from "../../models/user";
+import getJWTData from "../../utils/auth/getJWTData";
 import unboundSetCookie from "../../utils/middleware/setCookie";
 
 const ComplexityLimitRule = createComplexityLimitRule(75000, {

@@ -1,22 +1,18 @@
-import styles from "./NavDrawer.module.css";
-
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-
-import { useRouter } from "next/router";
 import Link from "next/link";
-
-import UserContext from "../auth/UserContext";
-import useLogout from "../auth/useLogout";
-
+import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
+import useLogout from "../auth/useLogout";
+import UserContext from "../auth/UserContext";
+import styles from "./NavDrawer.module.css";
 
 export default function NavDrawer({ open, setOpen, pages }) {
   const user = useContext(UserContext);

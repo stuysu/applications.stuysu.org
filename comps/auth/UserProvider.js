@@ -1,6 +1,6 @@
-import UserContext, { defaultValue } from "./UserContext";
 import { gql, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
+import UserContext, { defaultValue } from "./UserContext";
 
 const QUERY = gql`
   query {

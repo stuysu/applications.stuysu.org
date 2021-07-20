@@ -1,5 +1,5 @@
-import mongoose from "./../../models/mongoose";
 import DataLoader from "dataloader";
+import mongoose from "./../../models/mongoose";
 
 export default function findOneLoaderFactory(
   model,

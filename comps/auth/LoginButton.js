@@ -1,5 +1,5 @@
-import GoogleLogin from "react-google-login";
 import { gql, useMutation } from "@apollo/client";
+import GoogleLogin from "react-google-login";
 import { GOOGLE_CLIENT_ID } from "../../constants";
 
 const LOGIN_MUTATION = gql`

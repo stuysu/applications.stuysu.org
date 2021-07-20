@@ -7,6 +7,7 @@ export default gql`
     color: HexColorCode!
     description: String!
     active: Boolean!
+    archived: Boolean!
     createdAt: DateTime!
     updatedAt: DateTime!
   }

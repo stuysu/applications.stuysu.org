@@ -1,7 +1,6 @@
-import mongoose from "./mongoose";
 import findOneLoaderFactory from "../utils/dataloaders/findOneLoaderFactory";
-import findUserByEmail from "./statics/user/findByEmail";
 import getAnonymitySecret from "./methods/user/getAnonymitySecret";
+import mongoose from "./mongoose";
 import findByEmail from "./statics/user/findByEmail";
 import findByGoogleId from "./statics/user/findByGoogleId";
 

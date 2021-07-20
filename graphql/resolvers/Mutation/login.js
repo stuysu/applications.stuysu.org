@@ -1,11 +1,11 @@
-import { ForbiddenError, UserInputError } from "apollo-server-micro";
-import getAccessTokenPayload from "../../../utils/auth/getAccessTokenPayload";
-import validateAccessTokenPayload from "../../../utils/auth/validateAccessTokenPayload";
-import User from "../../../models/user";
-import getIdTokenPayload from "../../../utils/auth/getIdTokenPayload";
-import validateIdTokenPayload from "../../../utils/auth/validateIdTokenPayload";
+import { ForbiddenError } from "apollo-server-micro";
 import { sign } from "jsonwebtoken";
 import KeyPair from "../../../models/keyPair";
+import User from "../../../models/user";
+import getAccessTokenPayload from "../../../utils/auth/getAccessTokenPayload";
+import getIdTokenPayload from "../../../utils/auth/getIdTokenPayload";
+import validateAccessTokenPayload from "../../../utils/auth/validateAccessTokenPayload";
+import validateIdTokenPayload from "../../../utils/auth/validateIdTokenPayload";
 
 export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
   if (signedIn) {
