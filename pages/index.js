@@ -15,8 +15,13 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Typography variant="h2" align="center" gutterBottom>
-          StuySU Applications Site
+        <img
+          src={"/form-vector.svg"}
+          className={styles.vector}
+          alt={"Vector of someone filling out a form"}
+        />
+        <Typography variant={"h4"} gutterBottom>
+          Let's get you signed in first
         </Typography>
         <LoginButton />
       </main>

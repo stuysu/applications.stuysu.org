@@ -4,7 +4,7 @@ import client from "../comps/apollo/client";
 import UserProvider from "../comps/auth/UserProvider";
 import { StylesProvider } from "@material-ui/styles";
 import ThemeContext from "../comps/theme/ThemeContext";
-import TopAppBar from "../comps/nav/TopAppBar";
+import Navigation from "../comps/nav/Navigation";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeContext>
         <ApolloProvider client={client}>
           <UserProvider>
-            <TopAppBar />
+            <Navigation />
             <Component {...pageProps} />
           </UserProvider>
         </ApolloProvider>
