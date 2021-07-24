@@ -3,6 +3,7 @@ import getAnonymitySecret from "./methods/user/getAnonymitySecret";
 import mongoose from "./mongoose";
 import findByEmail from "./statics/user/findByEmail";
 import findByGoogleId from "./statics/user/findByGoogleId";
+import queryUsers from "./statics/user/queryUsers";
 
 const Schema = mongoose.Schema;
 
@@ -20,6 +21,7 @@ UserSchema.statics.idLoader = findOneLoaderFactory("User");
 UserSchema.statics.emailLoader = findOneLoaderFactory("User", "email");
 UserSchema.statics.findByEmail = findByEmail;
 UserSchema.statics.findByGoogleId = findByGoogleId;
+UserSchema.statics.queryUsers = queryUsers;
 
 UserSchema.methods.getAnonymitySecret = getAnonymitySecret;
 

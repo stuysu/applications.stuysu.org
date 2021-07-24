@@ -27,5 +27,15 @@ export default gql`
     Only admins are allowed to access this query
     """
     userById(id: ObjectID!): User
+
+    """
+    Takes a query and returns users that match the query.
+    Only admins are allowed to access this query
+    """
+    users(
+      query: String! = ""
+      page: PositiveInt! = 1
+      resultsPerPage: PositiveInt! = 15
+    ): PaginatedUserResult!
   }
 `;
