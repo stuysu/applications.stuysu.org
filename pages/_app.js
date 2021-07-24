@@ -4,6 +4,7 @@ import client from "../comps/apollo/client";
 import UserProvider from "../comps/auth/UserProvider";
 import Navigation from "../comps/nav/Navigation";
 import ThemeContext from "../comps/theme/ThemeContext";
+import Footer from "../comps/ui/Footer";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }) {
           <UserProvider>
             <Navigation />
             <Component {...pageProps} />
+            <Footer />
           </UserProvider>
         </ApolloProvider>
       </ThemeContext>

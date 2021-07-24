@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useContext } from "react";
 import LoginButton from "../comps/auth/LoginButton";
 import UserContext from "../comps/auth/UserContext";
-import Footer from "../comps/ui/Footer.js";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -18,7 +17,7 @@ export default function Home() {
         {!user.signedIn && (
           <>
             <img
-              src={"/form-vector.svg"}
+              src={"/form.svg"}
               className={styles.vector}
               alt={"Vector of someone filling out a form"}
             />
@@ -29,8 +28,6 @@ export default function Home() {
           </>
         )}
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -1,0 +1,11 @@
+.vector {
+  width: 400px;
+  max-width: 80vw;
+  margin: 1rem 0;
+}
+
+.container {
+  text-align: center;
+  padding: 5rem 1rem;
+  height: 80vh;
+}

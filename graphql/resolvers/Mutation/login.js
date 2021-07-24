@@ -27,8 +27,15 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
 
   let user = await User.findByGoogleId(idTokenPayload.sub);
 
-  if (!user) {
-    // Add the user to the database
+  if (user) {
+    // If the user updated their account update locally
+    user.firstName = idTokenPayload.given_name;
+    user.lastName = idTokenPayload.family_name;
+    user.picture = idTokenPayload.picture;
+
+    await user.save();
+  } else {
+    // Add the user to the database if they don't exist
     user = await User.create({
       googleUserId: idTokenPayload.sub,
       firstName: idTokenPayload.given_name,

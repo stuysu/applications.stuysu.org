@@ -9,8 +9,11 @@
 }
 
 .title {
-  flex-grow: 1;
   font-weight: bold;
+}
+
+.titleContainer {
+  flex-grow: 1;
 }
 
 .appBar {

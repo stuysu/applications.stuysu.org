@@ -6,6 +6,7 @@ import People from "@material-ui/icons/PeopleOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import styles from "./AdminTabBar.module.css";
 
 const pages = [
   {
@@ -28,16 +29,29 @@ const pages = [
   },
 ];
 
+function getActivePageIndex(pathname) {
+  return pages.findIndex(({ active }) => pathname.match(active));
+}
+
 export default function AdminTabBar() {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const { pathname } = useRouter();
+  const router = useRouter();
+  const { pathname } = router;
+  const previousPath = globalThis.sessionStorage?.getItem(
+    "previous-admin-path"
+  );
+
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    previousPath ? getActivePageIndex(previousPath) : 0
+  );
 
   useEffect(() => {
-    setActiveTabIndex(pages.findIndex(({ active }) => pathname.match(active)));
+    setActiveTabIndex(getActivePageIndex(pathname));
+    globalThis.sessionStorage.setItem("previous-admin-path", pathname);
   }, [pathname]);
 
   return (
     <Tabs
+      className={styles.tabs}
       value={activeTabIndex}
       indicatorColor="primary"
       textColor="primary"

@@ -21,5 +21,11 @@ export default gql`
       page: PositiveInt! = 1
       resultsPerPage: PositiveInt! = 15
     ): [Application!]!
+
+    """
+    Takes an id and returns the associated user.
+    Only admins are allowed to access this query
+    """
+    userById(id: ObjectID!): User
   }
 `;

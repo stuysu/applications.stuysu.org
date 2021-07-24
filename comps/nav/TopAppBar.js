@@ -22,9 +22,13 @@ export default function TopAppBar({ setDrawerOpen, pages }) {
     <div className={styles.root}>
       <AppBar position="static" className={styles.appBar} elevation={0}>
         <Toolbar>
-          <Typography variant="h6" className={styles.title}>
-            StuySU Applications Site
-          </Typography>
+          <Link href={"/"}>
+            <a className={styles.titleContainer}>
+              <Typography variant="h6" className={styles.title}>
+                StuySU Applications Site
+              </Typography>
+            </a>
+          </Link>
 
           <div className={styles.tabs}>
             {pages.map(
