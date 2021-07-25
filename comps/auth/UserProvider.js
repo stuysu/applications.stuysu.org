@@ -6,6 +6,7 @@ const QUERY = gql`
   query {
     authenticatedUser {
       id
+      name
       firstName
       lastName
       email
@@ -36,6 +37,7 @@ export default function UserProvider({ children }) {
           signedIn: true,
           adminPrivileges: user.adminPrivileges,
           id: user.id,
+          name: user.name,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,

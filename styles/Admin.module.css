@@ -19,7 +19,7 @@
 .userList {
   width: 500px;
   max-width: 90vw;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 

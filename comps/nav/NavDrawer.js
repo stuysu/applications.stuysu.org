@@ -30,7 +30,7 @@ export default function NavDrawer({ open, setOpen, pages }) {
           {user.signedIn && (
             <>
               <Avatar
-                alt={user.firstName + " " + user.lastName}
+                alt={user.name}
                 src={user.picture}
                 size={80}
                 className={styles.avatar}
@@ -38,7 +38,7 @@ export default function NavDrawer({ open, setOpen, pages }) {
               <Typography variant="body1">
                 Signed in as{" "}
                 <Typography variant="inherit" component="span" color="primary">
-                  {user.firstName} {user.lastName}
+                  {user.name}
                 </Typography>
               </Typography>
               <Typography variant="body1" color="primary">

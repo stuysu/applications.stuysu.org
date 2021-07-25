@@ -6,6 +6,7 @@ export const defaultValue = {
   id: null,
   firstName: null,
   lastName: null,
+  name: null,
   email: null,
   picture: null,
 };
