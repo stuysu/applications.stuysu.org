@@ -2,3 +2,33 @@
   padding: 4rem 1rem;
   min-height: 80vh;
 }
+
+.textCenter {
+  text-align: center;
+}
+
+.center {
+  justify-content: center;
+  display: flex;
+}
+
+.textField {
+  margin: 1rem;
+}
+
+.userList {
+  width: 500px;
+  max-width: 90vw;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.pagination {
+  margin: 1rem;
+}
+
+.noResultsVector {
+  width: 200px;
+  max-width: 70vw;
+  margin: 1rem;
+}
