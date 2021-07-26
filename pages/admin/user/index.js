@@ -33,6 +33,7 @@ const QUERY = gql`
         lastName
         email
         picture
+        adminPrivileges
       }
     }
   }
@@ -60,6 +61,13 @@ export default function UserAdmin() {
           exist. <br />
           Ask them to sign into the site and an account will be created for
           them.
+        </Typography>
+
+        <br />
+
+        <Typography align={"center"} variant={"body1"}>
+          To filter only users with admin privileges, add <code>:admin</code> to
+          your search.
         </Typography>
 
         <div className={styles.center}>
@@ -91,7 +99,19 @@ export default function UserAdmin() {
                       <Avatar alt={user.name} src={user.picture} />
                     </ListItemAvatar>
 
-                    <ListItemText primary={user.name} secondary={user.email} />
+                    <ListItemText
+                      primary={user.name}
+                      secondary={
+                        <>
+                          {user.email}{" "}
+                          {user.adminPrivileges && (
+                            <Typography color={"primary"} variant={"subtitle2"}>
+                              <b>Is Admin</b>
+                            </Typography>
+                          )}
+                        </>
+                      }
+                    />
 
                     <ListItemSecondaryAction>
                       <Link href={"/admin/user/" + user.id}>

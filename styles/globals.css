@@ -16,3 +16,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+code {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0,0, 0.05);
+}

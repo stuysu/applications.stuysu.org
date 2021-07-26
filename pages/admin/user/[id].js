@@ -37,7 +37,7 @@ const EDIT_MUTATION = gql`
 const ObjectIdRegex = /^[A-Fa-f0-9]{24}$/;
 
 export default function EditUser() {
-  const { adminPrivileges } = useContext(UserContext);
+  const { adminPrivileges, id: authenticatedUserId } = useContext(UserContext);
   const router = useRouter();
   const { id } = router.query;
   const isValidId = ObjectIdRegex.test(id || "");
@@ -50,6 +50,16 @@ export default function EditUser() {
   const [update, { loading: updating }] = useMutation(EDIT_MUTATION);
 
   const setAdminPrivileges = async bool => {
+    const message = bool
+      ? "Are you sure you want to give this user admin privileges? They will be able to access this panel or even remove your own privileges."
+      : "Are you sure you want to remove this user's admin privileges? This is only necessary if this user should not have access to the admin panel.";
+
+    const confirmation = window.confirm(message);
+
+    if (!confirmation) {
+      return;
+    }
+
     try {
       await update({ variables: { id, adminPrivileges: bool } });
     } catch (e) {
@@ -101,6 +111,7 @@ export default function EditUser() {
   }
 
   const user = data?.userById;
+  const userIsSelf = authenticatedUserId === id;
 
   if (!user) {
     return (
@@ -187,20 +198,40 @@ export default function EditUser() {
 
             <br />
 
-            <Typography variant={"subtitle1"}>
+            <Typography variant={"subtitle1"} gutterBottom>
               This user currently{" "}
-              {user.adminPrivileges ? (
-                <Typography variant={"inherit"} color={"primary"}>
-                  <b>has</b> admin privileges
-                </Typography>
-              ) : (
-                <Typography variant={"inherit"} color={"error"}>
-                  <b>does not</b> have admin privileges
-                </Typography>
-              )}
+              <Typography
+                variant={"inherit"}
+                color={user.adminPrivileges ? "primary" : "error"}
+              >
+                <b>{user.adminPrivileges ? "has" : "does not have"}</b>
+              </Typography>{" "}
+              admin privileges
             </Typography>
           </div>
         </div>
+
+        <br />
+
+        <div className={styles.center}>
+          <Button
+            variant={"contained"}
+            color={user.adminPrivileges ? "secondary" : "primary"}
+            disabled={updating || userIsSelf}
+            onClick={() => setAdminPrivileges(!user.adminPrivileges)}
+          >
+            {user.adminPrivileges
+              ? "Remove Admin Privileges"
+              : "Give Admin Privileges"}
+          </Button>
+        </div>
+
+        {userIsSelf && (
+          <Typography variant={"subtitle1"} color={"error"} align={"center"}>
+            You are not allowed to remove your own admin privileges. <br /> Ask
+            another admin to do it for you if necessary.
+          </Typography>
+        )}
       </div>
     </AdminRequired>
   );
