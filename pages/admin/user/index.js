@@ -79,7 +79,12 @@ export default function UserAdmin() {
               startAdornment: <SearchOutlined />,
             }}
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={e => {
+              setQuery(e.target.value);
+              if (page !== 1) {
+                setPage(1);
+              }
+            }}
           />
         </div>
 
