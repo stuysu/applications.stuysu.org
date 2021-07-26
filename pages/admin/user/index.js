@@ -3,6 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import Link from "@material-ui/core/Link";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -13,9 +14,10 @@ import Typography from "@material-ui/core/Typography";
 import Edit from "@material-ui/icons/EditOutlined";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import Pagination from "@material-ui/lab/Pagination";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import AdminRequired from "../../../comps/admin/AdminRequired";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
+import UserContext from "../../../comps/auth/UserContext";
 import styles from "./../../../styles/Admin.module.css";
 
 const QUERY = gql`
@@ -37,9 +39,13 @@ const QUERY = gql`
 `;
 
 export default function UserAdmin() {
+  const user = useContext(UserContext);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const { data, loading } = useQuery(QUERY, { variables: { query, page } });
+  const { data, loading } = useQuery(QUERY, {
+    variables: { query, page },
+    skip: !user.adminPrivileges,
+  });
 
   return (
     <AdminRequired>
@@ -84,11 +90,17 @@ export default function UserAdmin() {
                     <ListItemAvatar>
                       <Avatar alt={user.name} src={user.picture} />
                     </ListItemAvatar>
+
                     <ListItemText primary={user.name} secondary={user.email} />
+
                     <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="comments">
-                        <Edit />
-                      </IconButton>
+                      <Link href={"/admin/user/" + user.id}>
+                        <a>
+                          <IconButton edge="end" aria-label="comments">
+                            <Edit />
+                          </IconButton>
+                        </a>
+                      </Link>
                     </ListItemSecondaryAction>
                   </ListItem>
 

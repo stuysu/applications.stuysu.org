@@ -32,3 +32,14 @@
   max-width: 70vw;
   margin: 1rem;
 }
+
+.manageUserAvatar {
+  width: 100px;
+  height: 100px;
+  margin: 1rem;
+}
+
+.tabBarWidthContainer {
+  width: 500px;
+  max-width: 80vw;
+}

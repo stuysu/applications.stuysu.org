@@ -32,6 +32,7 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
     user.firstName = idTokenPayload.given_name;
     user.lastName = idTokenPayload.family_name;
     user.picture = idTokenPayload.picture;
+    user.email = idTokenPayload.email.toLowerCase();
 
     await user.save();
   } else {
