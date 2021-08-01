@@ -10,7 +10,7 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
-import useLogout from "../auth/useLogout";
+import useLogout from "../../utils/hooks/useLogout";
 import UserContext from "../auth/UserContext";
 import styles from "./NavDrawer.module.css";
 
