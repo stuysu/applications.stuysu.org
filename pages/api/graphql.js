@@ -2,8 +2,7 @@ import { ApolloServer, ForbiddenError } from "apollo-server-micro";
 import { createComplexityLimitRule } from "graphql-validation-complexity";
 import resolvers from "../../graphql/resolvers";
 import typeDefs from "../../graphql/typeDefs";
-import User from "../../models/user";
-import getJWTData from "../../utils/auth/getJWTData";
+import authChecker from "../../utils/middleware/authChecker";
 import unboundSetCookie from "../../utils/middleware/setCookie";
 
 const ComplexityLimitRule = createComplexityLimitRule(75000, {
@@ -16,29 +15,11 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req, res }) => {
-    let user, signedIn, anonymitySecret;
+    await runMiddleware(req, res, authChecker);
 
-    let jwt =
-      req.cookies["jwt"] ||
-      req.headers["x-access-token"] ||
-      req.headers["authorization"];
-
-    if (jwt && jwt.startsWith("Bearer ")) {
-      jwt = jwt.replace("Bearer ", "");
-    }
-
-    if (jwt) {
-      const data = await getJWTData(jwt);
-
-      if (data) {
-        user = await User.findById(data.user.id);
-      }
-
-      if (user) {
-        signedIn = true;
-        anonymitySecret = data.user.anonymitySecret;
-      }
-    }
+    const user = req.user;
+    const signedIn = req.signedIn;
+    const anonymitySecret = user ? user.anonymitySecret : null;
 
     function authenticationRequired() {
       if (!signedIn) {
