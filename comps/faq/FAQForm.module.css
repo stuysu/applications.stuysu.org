@@ -1,0 +1,27 @@
+.textField {
+  margin: 1rem;
+  width: 400px;
+  max-width: 90%;
+}
+
+.tinyEditor {
+  margin: 1rem;
+}
+
+.button {
+  margin: 1rem;
+}
+
+.hr {
+  margin: 1rem;
+}
+
+@media (max-width: 800px) {
+  .root {
+    max-width: 95vw;
+  }
+
+  .tinyEditor {
+    max-width: 95%;
+  }
+}

@@ -7,5 +7,5 @@
 .container {
   text-align: center;
   padding: 5rem 1rem;
-  height: 80vh;
+  min-height: 80vh;
 }

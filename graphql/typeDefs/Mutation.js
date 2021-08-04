@@ -5,5 +5,10 @@ export default gql`
     login(accessToken: NonEmptyString!, idToken: JWT!): JWT!
     logout: Void
     editUser(id: ObjectID!, adminPrivileges: Boolean!): User!
+    createFAQ(
+      title: NonEmptyString!
+      url: NonEmptyString!
+      body: NonEmptyString!
+    ): FAQ!
   }
 `;

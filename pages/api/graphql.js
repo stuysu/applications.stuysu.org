@@ -4,6 +4,7 @@ import resolvers from "../../graphql/resolvers";
 import typeDefs from "../../graphql/typeDefs";
 import authChecker from "../../utils/middleware/authChecker";
 import unboundSetCookie from "../../utils/middleware/setCookie";
+import runMiddleware from "./../../utils/middleware/runMiddleware";
 
 const ComplexityLimitRule = createComplexityLimitRule(75000, {
   scalarCost: 1,

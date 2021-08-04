@@ -1,7 +1,9 @@
 import { typeDefs as graphqlScalarDefs } from "graphql-scalars";
 import Application from "./Application";
+import FAQ from "./FAQ";
 import Mutation from "./Mutation";
 import PaginatedApplicationResult from "./PaginatedApplicationResult";
+import PaginatedFAQResult from "./PaginatedFAQResult";
 import PaginatedUserResult from "./PaginatedUserResult";
 import Query from "./Query";
 import User from "./User";
@@ -9,8 +11,10 @@ import User from "./User";
 const typeDefs = [
   ...graphqlScalarDefs,
   Application,
+  FAQ,
   Mutation,
   PaginatedApplicationResult,
+  PaginatedFAQResult,
   PaginatedUserResult,
   Query,
   User,

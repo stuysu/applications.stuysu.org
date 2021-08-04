@@ -24,3 +24,27 @@ code {
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: rgba(0, 0, 0, 0.05);
 }
+
+.successSnackbar {
+  background-color: #10ac84 !important;
+  color: white;
+}
+
+.sanitized-html iframe {
+  max-width: 100%;
+}
+
+.sanitized-html img {
+  max-width: 90vw;
+  max-height: 600px;
+}
+
+.tox-statusbar__branding {
+  display: none;
+}
+
+.tox {
+  border-radius: 5px;
+}
+
+
