@@ -36,7 +36,7 @@ export default function Home() {
 
         {user.signedIn && (
           <>
-            <Typography variant={"h4"} gutterBottom>
+            <Typography variant={"h4"} align={"center"} gutterBottom>
               Signed in as <b>{user.name}</b>
             </Typography>
             <Typography
