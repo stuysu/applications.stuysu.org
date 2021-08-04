@@ -1,5 +1,6 @@
 import { UserInputError } from "apollo-server-micro";
 import FAQ from "../../../models/faq";
+import sanitizeHtml from "../../../utils/content/sanitizeHtml";
 
 export default async (_, { title, url, body }, { adminRequired }) => {
   adminRequired();
@@ -21,6 +22,12 @@ export default async (_, { title, url, body }, { adminRequired }) => {
     throw new UserInputError(
       "The title field cannot be longer than 200 characters"
     );
+  }
+
+  body = sanitizeHtml(body);
+
+  if (!body) {
+    throw new UserInputError("The body field cannot be empty");
   }
 
   const updatedAt = new Date();

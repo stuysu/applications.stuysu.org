@@ -40,7 +40,7 @@
 }
 
 .tabBarWidthContainer {
-  width: 500px;
+  width: 600px;
   max-width: 80vw;
 }
 
@@ -53,7 +53,6 @@
   color: #f44336;
   border-color: #f44336;
 }
-
 
 .searchField {
   margin: 1rem;

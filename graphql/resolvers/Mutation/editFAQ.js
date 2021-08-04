@@ -1,5 +1,6 @@
 import { UserInputError } from "apollo-server-micro";
 import FAQ from "../../../models/faq";
+import sanitizeHtml from "../../../utils/content/sanitizeHtml";
 
 export default async (_, { id, title, url, body }, { adminRequired }) => {
   adminRequired();
@@ -18,6 +19,12 @@ export default async (_, { id, title, url, body }, { adminRequired }) => {
 
   if (url.length > 50) {
     throw new UserInputError("The url field must be less than 50 characters");
+  }
+
+  body = sanitizeHtml(body);
+
+  if (!body) {
+    throw new UserInputError("The body field cannot be empty");
   }
 
   faq.title = title;

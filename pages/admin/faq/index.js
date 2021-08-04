@@ -112,7 +112,8 @@ export default function FAQAdmin() {
         {!loading && (
           <div className={styles.center}>
             <Pagination
-              page={data?.page}
+              page={data.faqs?.page}
+              count={data.faqs?.numPages}
               onChange={(e, p) => setPage(p)}
               className={styles.pagination}
             />
