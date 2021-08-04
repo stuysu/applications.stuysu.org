@@ -3,6 +3,7 @@ import { StylesProvider } from "@material-ui/styles";
 import { SnackbarProvider } from "notistack";
 import client from "../comps/apollo/client";
 import UserProvider from "../comps/auth/UserProvider";
+import SharedDialog from "../comps/dialog/SharedDialog";
 import Navigation from "../comps/nav/Navigation";
 import ThemeContext from "../comps/theme/ThemeContext";
 import Footer from "../comps/ui/Footer";
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }) {
             variantSuccess: "successSnackbar",
           }}
         >
+          <SharedDialog />
           <ApolloProvider client={client}>
             <UserProvider>
               <Navigation />

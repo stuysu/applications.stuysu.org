@@ -16,7 +16,7 @@
   margin: 1rem;
 }
 
-.userList {
+.fixedSizeList {
   width: 500px;
   max-width: 90vw;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -42,4 +42,19 @@
 .tabBarWidthContainer {
   width: 500px;
   max-width: 80vw;
+}
+
+.editButton {
+  margin: 1rem;
+}
+
+.deleteButton {
+  margin: 1rem;
+  color: #f44336;
+  border-color: #f44336;
+}
+
+
+.searchField {
+  margin: 1rem;
 }

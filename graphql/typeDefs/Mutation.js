@@ -10,5 +10,14 @@ export default gql`
       url: NonEmptyString!
       body: NonEmptyString!
     ): FAQ!
+
+    editFAQ(
+      id: ObjectID!
+      title: NonEmptyString!
+      url: NonEmptyString!
+      body: NonEmptyString!
+    ): FAQ!
+
+    deleteFAQ(id: ObjectID!): Void
   }
 `;

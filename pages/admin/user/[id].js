@@ -9,8 +9,11 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import AdminRequired from "../../../comps/admin/AdminRequired";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
+import BackButton from "../../../comps/admin/BackButton";
 import UserContext from "../../../comps/auth/UserContext";
+import { ObjectIdRegex } from "../../../constants";
 import styles from "./../../../styles/Admin.module.css";
+
 const QUERY = gql`
   query ($id: ObjectID!) {
     userById(id: $id) {
@@ -34,7 +37,14 @@ const EDIT_MUTATION = gql`
   }
 `;
 
-const ObjectIdRegex = /^[A-Fa-f0-9]{24}$/;
+const AdminHeading = () => (
+  <>
+    <Typography variant={"h4"} align={"center"}>
+      Admin Panel
+    </Typography>
+    <AdminTabBar />
+  </>
+);
 
 export default function EditUser() {
   const { adminPrivileges, id: authenticatedUserId } = useContext(UserContext);
@@ -71,10 +81,8 @@ export default function EditUser() {
   if (adminPrivileges && id && !isValidId) {
     return (
       <div className={styles.container}>
-        <Typography variant={"h4"} align={"center"}>
-          Admin Panel
-        </Typography>
-        <AdminTabBar />
+        <AdminHeading />
+
         <Typography
           variant={"h5"}
           align={"center"}
@@ -103,6 +111,7 @@ export default function EditUser() {
   if (!data || loading) {
     return (
       <div className={styles.container}>
+        <AdminHeading />
         <div className={styles.center}>
           <CircularProgress />
         </div>
@@ -116,10 +125,8 @@ export default function EditUser() {
   if (!user) {
     return (
       <div className={styles.container}>
-        <Typography variant={"h4"} align={"center"}>
-          Admin Panel
-        </Typography>
-        <AdminTabBar />
+        <AdminHeading />
+
         <Typography
           variant={"h5"}
           align={"center"}
@@ -128,19 +135,7 @@ export default function EditUser() {
         >
           There is no user with that id
         </Typography>
-        <div className={styles.center}>
-          <Link href={"/admin/user"}>
-            <a>
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                startIcon={<ArrowBackIosOutlined />}
-              >
-                Back To Users
-              </Button>
-            </a>
-          </Link>
-        </div>
+        <BackButton href={"/admin/user"} label={"Back To Users"} />
       </div>
     );
   }
@@ -148,26 +143,8 @@ export default function EditUser() {
   return (
     <AdminRequired>
       <div className={styles.container}>
-        <Typography variant={"h4"} align={"center"}>
-          Admin Panel
-        </Typography>
-        <AdminTabBar />
-
-        <div className={styles.center}>
-          <div className={styles.tabBarWidthContainer}>
-            <Link href={"/admin/user"}>
-              <a>
-                <Button
-                  variant={"outlined"}
-                  color={"primary"}
-                  startIcon={<ArrowBackIosOutlined />}
-                >
-                  Back To Users
-                </Button>
-              </a>
-            </Link>
-          </div>
-        </div>
+        <AdminHeading />
+        <BackButton href={"/admin/user"} label={"Back To Users"} />
 
         <Typography variant={"h5"} align={"center"} gutterBottom>
           Manage User

@@ -11,3 +11,5 @@ export const TINYMCE_API_KEY =
 // Used for uploading images for TinyEditor
 // Not required for testing, unless using image uploads feature
 export const IMGBB_API_KEY = process.env.IMGBB_API_KEY;
+
+export const ObjectIdRegex = /^[A-Fa-f0-9]{24}$/;

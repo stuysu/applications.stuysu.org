@@ -115,6 +115,7 @@ export default function FAQForm({
         className={styles.tinyEditor}
         helperText={touched.body && errors.body}
         error={touched.body && !!errors.body}
+        disabled={isSubmitting || disabled}
       />
 
       <hr className={styles.hr} />

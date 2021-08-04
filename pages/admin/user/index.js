@@ -96,7 +96,7 @@ export default function UserAdmin() {
 
         {!!data && !!data.users.results.length && !loading && (
           <div className={styles.center}>
-            <List className={styles.userList}>
+            <List className={styles.fixedSizeList}>
               {data.users.results.map((user, index) => (
                 <Fragment key={user.id}>
                   <ListItem alignItems="flex-start">
