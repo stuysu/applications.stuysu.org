@@ -1,9 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
+import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import StyledLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import EditOutlined from "@material-ui/icons/EditOutlined";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 import BackButton from "../../comps/admin/BackButton";
+import UserContext from "../../comps/auth/UserContext";
 import styles from "./../../styles/FAQ.module.css";
 
 const QUERY = gql`
@@ -22,6 +27,7 @@ export default function FAQPreview() {
   const router = useRouter();
   const { url } = router.query;
   const { data, loading } = useQuery(QUERY, { variables: { url } });
+  const user = useContext(UserContext);
 
   const faq = data?.faqByUrl;
 
@@ -84,6 +90,20 @@ export default function FAQPreview() {
       >
         <b>{faq.title}</b>
       </Typography>
+
+      {user.signedIn && user.adminPrivileges && (
+        <div className={styles.center}>
+          <Link href={"/admin/faq/" + faq.id}>
+            <Button
+              startIcon={<EditOutlined />}
+              variant={"outlined"}
+              color={"primary"}
+            >
+              Edit This FAQ
+            </Button>
+          </Link>
+        </div>
+      )}
 
       <div className={styles.center}>
         <div className={styles.fixedSizeContainer}>

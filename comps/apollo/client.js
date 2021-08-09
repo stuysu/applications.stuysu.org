@@ -1,19 +1,13 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { createUploadLink } from "apollo-upload-client";
 
 export const cache = new InMemoryCache();
 
-const authJWT = globalThis.localStorage?.getItem("jwt");
-const link = createUploadLink({
+const client = new ApolloClient({
   uri: "/api/graphql",
   credentials: "include",
   headers: {
-    authorization: authJWT ? "Bearer " + authJWT : "",
+    authorization: localStorage.getItem("jwt"),
   },
-});
-
-const client = new ApolloClient({
-  link,
   cache,
 });
 

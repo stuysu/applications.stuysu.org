@@ -2,9 +2,7 @@ import { ForbiddenError } from "apollo-server-micro";
 import { sign } from "jsonwebtoken";
 import KeyPair from "../../../models/keyPair";
 import User from "../../../models/user";
-import getAccessTokenPayload from "../../../utils/auth/getAccessTokenPayload";
 import getIdTokenPayload from "../../../utils/auth/getIdTokenPayload";
-import validateAccessTokenPayload from "../../../utils/auth/validateAccessTokenPayload";
 import validateIdTokenPayload from "../../../utils/auth/validateIdTokenPayload";
 
 export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
@@ -12,18 +10,8 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
     throw new ForbiddenError("You are already signed in.");
   }
 
-  const accessTokenPayload = await getAccessTokenPayload(accessToken);
-  validateAccessTokenPayload(accessTokenPayload);
-
   const idTokenPayload = await getIdTokenPayload(idToken);
   validateIdTokenPayload(idTokenPayload);
-
-  // Now make sure that both of them belong to the same user
-  if (idTokenPayload.sub !== accessTokenPayload.user_id) {
-    throw new ForbiddenError(
-      "The access token and id token do not belong to the same user"
-    );
-  }
 
   let user = await User.findByGoogleId(idTokenPayload.sub);
 
@@ -47,8 +35,7 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
     });
   }
 
-  const anonymitySecret = await user.getAnonymitySecret(accessToken);
-  const { id, firstName, lastName, email } = user;
+  const { id } = user;
 
   const { privateKey, passphrase } = await KeyPair.getSigningPair();
 
@@ -56,10 +43,6 @@ export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
     {
       user: {
         id,
-        firstName,
-        lastName,
-        email,
-        anonymitySecret,
       },
     },
     { key: privateKey, passphrase },

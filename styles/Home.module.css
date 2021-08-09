@@ -31,3 +31,12 @@
   max-width: 90vw;
   margin-bottom: 4rem;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  margin: 1rem;
+}

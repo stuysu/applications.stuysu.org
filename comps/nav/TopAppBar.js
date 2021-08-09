@@ -24,7 +24,11 @@ export default function TopAppBar({ setDrawerOpen, pages }) {
         <Toolbar>
           <Link href={"/"}>
             <a className={styles.titleContainer}>
-              <Typography variant="h6" className={styles.title}>
+              <Typography
+                variant="h6"
+                className={styles.title}
+                color={"primary"}
+              >
                 StuySU Applications Site
               </Typography>
             </a>

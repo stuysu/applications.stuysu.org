@@ -58,6 +58,15 @@ export default function FAQsHome() {
         </div>
       )}
 
+      {!loading && !data.faqs.total && (
+        <div className={styles.textCenter}>
+          <Typography paragraph gutterBottom>
+            There are no FAQs that match your search query
+          </Typography>
+          <img src={"/no-data.svg"} alt={"An empty clipboard"} width={200} />
+        </div>
+      )}
+
       {!loading && (
         <div className={styles.center}>
           <List className={styles.fixedSizeContainer}>
@@ -68,9 +77,12 @@ export default function FAQsHome() {
                     <ListItemIcon>
                       <DescriptionOutlined />
                     </ListItemIcon>
-                    <ListItemText primary={title} />
+                    <StyledLink>
+                      <ListItemText primary={title} />
+                    </StyledLink>
                   </ListItem>
                 </Link>
+
                 {index + 1 !== data?.faqs?.results.length && <Divider />}
               </Fragment>
             ))}

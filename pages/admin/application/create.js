@@ -1,5 +1,10 @@
+import AdminRequired from "../../../comps/admin/AdminRequired";
 import styles from "./../../../styles/Admin.module.css";
 
 export default function CreateApplication() {
-  return <div className={styles.container}></div>;
+  return (
+    <AdminRequired>
+      <div className={styles.container}></div>
+    </AdminRequired>
+  );
 }

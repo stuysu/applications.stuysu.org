@@ -9,6 +9,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 import DescriptionOutlined from "@material-ui/icons/DescriptionOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
@@ -41,6 +42,7 @@ export default function FAQAdmin() {
 
   const { data, loading, refetch } = useQuery(QUERY, {
     variables: { query, page },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {
@@ -62,6 +64,20 @@ export default function FAQAdmin() {
         </Typography>
 
         <div className={styles.center}>
+          <Link href={"/admin/faq/create"}>
+            <a>
+              <Button
+                startIcon={<AddOutlined />}
+                variant={"contained"}
+                color={"primary"}
+              >
+                Create FAQ
+              </Button>
+            </a>
+          </Link>
+        </div>
+
+        <div className={styles.center}>
           <TextField
             label={"Search"}
             InputProps={{
@@ -81,7 +97,16 @@ export default function FAQAdmin() {
           </div>
         )}
 
-        {!loading && (
+        {!loading && !data.faqs.total && (
+          <div className={styles.textCenter}>
+            <Typography paragraph gutterBottom>
+              There are no FAQs that match your search query
+            </Typography>
+            <img src={"/no-data.svg"} alt={"An empty clipboard"} width={200} />
+          </div>
+        )}
+
+        {!loading && !!data.faqs.total && (
           <div className={styles.center}>
             <List className={styles.fixedSizeList}>
               {data.faqs.results.map(({ id, title, url }, index) => (

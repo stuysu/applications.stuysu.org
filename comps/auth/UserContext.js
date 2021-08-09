@@ -9,6 +9,9 @@ export const defaultValue = {
   name: null,
   email: null,
   picture: null,
+  loaded: false,
+  anonymitySecret: null,
+  googleDriveAnonymityFileId: null,
 };
 
 const UserContext = createContext(defaultValue);

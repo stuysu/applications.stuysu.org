@@ -1,5 +1,4 @@
 import findOneLoaderFactory from "../utils/dataloaders/findOneLoaderFactory";
-import getAnonymitySecret from "./methods/user/getAnonymitySecret";
 import mongoose from "./mongoose";
 import findByEmail from "./statics/user/findByEmail";
 import findByGoogleId from "./statics/user/findByGoogleId";
@@ -22,8 +21,6 @@ UserSchema.statics.emailLoader = findOneLoaderFactory("User", "email");
 UserSchema.statics.findByEmail = findByEmail;
 UserSchema.statics.findByGoogleId = findByGoogleId;
 UserSchema.statics.queryUsers = queryUsers;
-
-UserSchema.methods.getAnonymitySecret = getAnonymitySecret;
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
 

@@ -9,5 +9,6 @@ export default gql`
     email: EmailAddress!
     adminPrivileges: Boolean!
     picture: String!
+    googleDriveAnonymityFileId: String
   }
 `;

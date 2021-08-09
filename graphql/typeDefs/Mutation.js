@@ -2,7 +2,7 @@ import { gql } from "apollo-server-micro";
 
 export default gql`
   type Mutation {
-    login(accessToken: NonEmptyString!, idToken: JWT!): JWT!
+    login(idToken: JWT!): JWT!
     logout: Void
     editUser(id: ObjectID!, adminPrivileges: Boolean!): User!
     createFAQ(
@@ -19,5 +19,7 @@ export default gql`
     ): FAQ!
 
     deleteFAQ(id: ObjectID!): Void
+
+    editGoogleDriveAnonymityFileId(fileId: NonEmptyString!): Void
   }
 `;
