@@ -46,14 +46,14 @@ const AdminHeading = () => (
 );
 
 export default function EditUser() {
-  const { adminPrivileges, id: authenticatedUserId } = useContext(UserContext);
+  const { id: authenticatedUserId } = useContext(UserContext);
   const router = useRouter();
   const { id } = router.query;
   const isValidId = ObjectIdRegex.test(id || "");
 
   const { data, loading } = useQuery(QUERY, {
     variables: { id },
-    skip: !isValidId || !adminPrivileges,
+    skip: !isValidId,
   });
 
   const [update, { loading: updating }] = useMutation(EDIT_MUTATION);
@@ -77,7 +77,7 @@ export default function EditUser() {
     }
   };
 
-  if (adminPrivileges && id && !isValidId) {
+  if (id && !isValidId) {
     return (
       <div className={styles.container}>
         <AdminHeading />

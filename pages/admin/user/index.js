@@ -44,7 +44,6 @@ export default function UserAdmin() {
   const [query, setQuery] = useState("");
   const { data, loading } = useQuery(QUERY, {
     variables: { query, page },
-    skip: !user.adminPrivileges,
   });
 
   return (

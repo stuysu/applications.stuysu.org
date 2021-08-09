@@ -68,7 +68,11 @@ export default function CreateFAQ() {
       </Typography>
 
       <div className={styles.center}>
-        <FAQForm onSubmit={onSubmit} submitLabel={"Create"} />
+        <FAQForm
+          onSubmit={onSubmit}
+          submitLabel={"Create"}
+          disabled={loading}
+        />
       </div>
     </div>
   );
