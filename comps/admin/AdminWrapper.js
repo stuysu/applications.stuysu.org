@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import UserContext from "../auth/UserContext";
-import styles from "./AdminWrapper.css";
+import styles from "./AdminWrapper.module.css";
 import AuthenticationRequired from "./AuthenticationRequired";
 
 export default function AdminWrapper({ children }) {
