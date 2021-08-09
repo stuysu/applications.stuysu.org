@@ -15,9 +15,10 @@ const EDIT_MUTATION = gql`
 export default function SetupAnonymitySecret() {
   const user = useContext(UserContext);
   const router = useRouter();
-  const { referrer, accessToken } = router.query;
+  const { referrer } = router.query;
   const [edit] = useMutation(EDIT_MUTATION);
   const [error, setError] = useState(false);
+  const accessToken = globalThis?.sessionStorage?.getItem("accessToken");
 
   const generateSecret = async () => {
     const anonymitySecret = Array.from(
@@ -96,7 +97,7 @@ export default function SetupAnonymitySecret() {
   }, [user]);
 
   useEffect(() => {
-    if (accessToken && user) {
+    if (accessToken && user.signedIn) {
       getSecret()
         .then(async secret => {
           if (!secret) {

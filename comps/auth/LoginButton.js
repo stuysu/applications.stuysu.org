@@ -69,8 +69,9 @@ export default function LoginButton() {
         window.location.origin
       );
 
+      window.sessionStorage.setItem("accessToken", accessToken);
+
       url.searchParams.append("referrer", router.asPath);
-      url.searchParams.append("accessToken", accessToken);
 
       window.location.href = url.href;
     } catch (er) {
