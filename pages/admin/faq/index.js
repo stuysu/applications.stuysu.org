@@ -102,7 +102,11 @@ export default function FAQAdmin() {
             <Typography paragraph gutterBottom>
               There are no FAQs that match your search query
             </Typography>
-            <img src={"/no-data.svg"} alt={"An empty clipboard"} width={200} />
+            <img
+              src={"/no-data.svg"}
+              alt={"Someone holding an empty box"}
+              width={200}
+            />
           </div>
         )}
 

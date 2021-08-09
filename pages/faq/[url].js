@@ -67,7 +67,11 @@ export default function FAQPreview() {
         </Typography>
 
         <div className={styles.center}>
-          <img src={"/no-data.svg"} alt={"An empty clipboard"} width={200} />
+          <img
+            src={"/no-data.svg"}
+            alt={"Someone holding an empty box"}
+            width={200}
+          />
         </div>
       </div>
     );
