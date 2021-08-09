@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import DialogQueue from "./DialogQueue";
+import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
+import { useEffect, useState } from "react";
+import DialogQueue from "./DialogQueue";
 
 export const queue = new DialogQueue({});
 
@@ -22,7 +22,7 @@ const SharedDialog = () => {
     return null;
   }
 
-  const handleClose = (resolveValue) => {
+  const handleClose = resolveValue => {
     const promise = item.promise;
     setItem(null);
     promise.resolve(resolveValue);

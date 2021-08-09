@@ -5,7 +5,6 @@ import ArrowBackIosOutlined from "@material-ui/icons/ArrowBackIosOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import AdminRequired from "../../../comps/admin/AdminRequired";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
 import FAQForm from "../../../comps/faq/FAQForm";
 import styles from "../../../styles/Admin.module.css";
@@ -42,37 +41,35 @@ export default function CreateFAQ() {
   };
 
   return (
-    <AdminRequired>
-      <div className={styles.container}>
-        <Typography variant={"h4"} align={"center"}>
-          Admin Panel
-        </Typography>
-        <AdminTabBar />
+    <div className={styles.container}>
+      <Typography variant={"h4"} align={"center"}>
+        Admin Panel
+      </Typography>
+      <AdminTabBar />
 
-        <div className={styles.center}>
-          <div className={styles.tabBarWidthContainer}>
-            <Link href={"/admin/faq"}>
-              <a>
-                <Button
-                  variant={"outlined"}
-                  color={"primary"}
-                  startIcon={<ArrowBackIosOutlined />}
-                >
-                  Back To FAQs
-                </Button>
-              </a>
-            </Link>
-          </div>
-        </div>
-
-        <Typography variant={"h5"} align={"center"} gutterBottom>
-          Create FAQ
-        </Typography>
-
-        <div className={styles.center}>
-          <FAQForm onSubmit={onSubmit} submitLabel={"Create"} />
+      <div className={styles.center}>
+        <div className={styles.tabBarWidthContainer}>
+          <Link href={"/admin/faq"}>
+            <a>
+              <Button
+                variant={"outlined"}
+                color={"primary"}
+                startIcon={<ArrowBackIosOutlined />}
+              >
+                Back To FAQs
+              </Button>
+            </a>
+          </Link>
         </div>
       </div>
-    </AdminRequired>
+
+      <Typography variant={"h5"} align={"center"} gutterBottom>
+        Create FAQ
+      </Typography>
+
+      <div className={styles.center}>
+        <FAQForm onSubmit={onSubmit} submitLabel={"Create"} />
+      </div>
+    </div>
   );
 }

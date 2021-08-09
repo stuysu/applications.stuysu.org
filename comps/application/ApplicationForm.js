@@ -1,8 +1,7 @@
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { useFormik } from "formik";
-import TinyEditor from "../shared/TinyEditor";
-import styles from "./FAQForm.module.css";
+import styles from "./ApplicationForm.module.css";
 
 async function validate(values) {}
 
@@ -14,7 +13,7 @@ function getDefaultUrl(title) {
     .substr(0, 50);
 }
 
-export default function FAQForm({
+export default function ApplicationForm({
   initialValues,
   onSubmit,
   submitLabel = "Submit",
@@ -72,10 +71,11 @@ export default function FAQForm({
         variant={"outlined"}
         error={touched.title && !!errors.title}
         helperText={touched.title && errors.title}
-        placeholder={"Why does the site need access to my Google Drive?"}
+        placeholder={"Sophomore Caucus Staff Applications 2019-2020"}
         disabled={disabled || isSubmitting}
         onBlur={handleBlur}
       />
+
       <TextField
         label={"URL"}
         value={values.url}
@@ -86,20 +86,12 @@ export default function FAQForm({
         helperText={
           touched.url && errors.url
             ? errors.url
-            : "applications.stuysu.org/faq/" + values.url
+            : "applications.stuysu.org/application/" + values.url
         }
-        placeholder={"why-google-drive"}
+        placeholder={"sophomore-caucus-staff-19-20"}
         disabled={disabled || isSubmitting}
         onBlur={handleBlur}
         className={styles.textField}
-      />
-      <TinyEditor
-        value={values.body}
-        setValue={val => setFieldValue("body", val)}
-        className={styles.tinyEditor}
-        helperText={touched.body && errors.body}
-        error={touched.body && !!errors.body}
-        disabled={isSubmitting || disabled}
       />
 
       <hr className={styles.hr} />

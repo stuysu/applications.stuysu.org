@@ -7,7 +7,6 @@ import ArrowBackIosOutlined from "@material-ui/icons/ArrowBackIosOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import AdminRequired from "../../../comps/admin/AdminRequired";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
 import BackButton from "../../../comps/admin/BackButton";
 import UserContext from "../../../comps/auth/UserContext";
@@ -141,75 +140,73 @@ export default function EditUser() {
   }
 
   return (
-    <AdminRequired>
-      <div className={styles.container}>
-        <AdminHeading />
-        <BackButton href={"/admin/user"} label={"Back To Users"} />
+    <div className={styles.container}>
+      <AdminHeading />
+      <BackButton href={"/admin/user"} label={"Back To Users"} />
 
-        <Typography variant={"h5"} align={"center"} gutterBottom>
-          Manage User
-        </Typography>
+      <Typography variant={"h5"} align={"center"} gutterBottom>
+        Manage User
+      </Typography>
 
-        <div className={styles.center}>
-          <Avatar
-            alt={user.name}
-            src={user.picture}
-            className={styles.manageUserAvatar}
-          />
-        </div>
-
-        <div className={styles.center}>
-          <div className={styles.tabBarWidthContainer}>
-            <Typography>
-              Name: <b>{user.name}</b>
-            </Typography>
-            <Typography>
-              Email: <b>{user.email}</b>
-            </Typography>
-            <br />
-            <Typography variant={"subtitle1"}>
-              The name, picture, and email information is automatically updated
-              every time the user signs in and so they are not allowed to be
-              changed
-            </Typography>
-
-            <br />
-
-            <Typography variant={"subtitle1"} gutterBottom>
-              This user currently{" "}
-              <Typography
-                variant={"inherit"}
-                color={user.adminPrivileges ? "primary" : "error"}
-              >
-                <b>{user.adminPrivileges ? "has" : "does not have"}</b>
-              </Typography>{" "}
-              admin privileges
-            </Typography>
-          </div>
-        </div>
-
-        <br />
-
-        <div className={styles.center}>
-          <Button
-            variant={"contained"}
-            color={user.adminPrivileges ? "secondary" : "primary"}
-            disabled={updating || userIsSelf}
-            onClick={() => setAdminPrivileges(!user.adminPrivileges)}
-          >
-            {user.adminPrivileges
-              ? "Remove Admin Privileges"
-              : "Give Admin Privileges"}
-          </Button>
-        </div>
-
-        {userIsSelf && (
-          <Typography variant={"subtitle1"} color={"error"} align={"center"}>
-            You are not allowed to remove your own admin privileges. <br /> Ask
-            another admin to do it for you if necessary.
-          </Typography>
-        )}
+      <div className={styles.center}>
+        <Avatar
+          alt={user.name}
+          src={user.picture}
+          className={styles.manageUserAvatar}
+        />
       </div>
-    </AdminRequired>
+
+      <div className={styles.center}>
+        <div className={styles.tabBarWidthContainer}>
+          <Typography>
+            Name: <b>{user.name}</b>
+          </Typography>
+          <Typography>
+            Email: <b>{user.email}</b>
+          </Typography>
+          <br />
+          <Typography variant={"subtitle1"}>
+            The name, picture, and email information is automatically updated
+            every time the user signs in and so they are not allowed to be
+            changed
+          </Typography>
+
+          <br />
+
+          <Typography variant={"subtitle1"} gutterBottom>
+            This user currently{" "}
+            <Typography
+              variant={"inherit"}
+              color={user.adminPrivileges ? "primary" : "error"}
+            >
+              <b>{user.adminPrivileges ? "has" : "does not have"}</b>
+            </Typography>{" "}
+            admin privileges
+          </Typography>
+        </div>
+      </div>
+
+      <br />
+
+      <div className={styles.center}>
+        <Button
+          variant={"contained"}
+          color={user.adminPrivileges ? "secondary" : "primary"}
+          disabled={updating || userIsSelf}
+          onClick={() => setAdminPrivileges(!user.adminPrivileges)}
+        >
+          {user.adminPrivileges
+            ? "Remove Admin Privileges"
+            : "Give Admin Privileges"}
+        </Button>
+      </div>
+
+      {userIsSelf && (
+        <Typography variant={"subtitle1"} color={"error"} align={"center"}>
+          You are not allowed to remove your own admin privileges. <br /> Ask
+          another admin to do it for you if necessary.
+        </Typography>
+      )}
+    </div>
   );
 }

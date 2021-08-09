@@ -1,6 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import { StylesProvider } from "@material-ui/styles";
 import { SnackbarProvider } from "notistack";
+import AdminWrapper from "../comps/admin/AdminWrapper";
 import client from "../comps/apollo/client";
 import UserProvider from "../comps/auth/UserProvider";
 import SharedDialog from "../comps/dialog/SharedDialog";
@@ -21,9 +22,11 @@ function MyApp({ Component, pageProps }) {
           <SharedDialog />
           <ApolloProvider client={client}>
             <UserProvider>
-              <Navigation />
-              <Component {...pageProps} />
-              <Footer />
+              <AdminWrapper>
+                <Navigation />
+                <Component {...pageProps} />
+                <Footer />
+              </AdminWrapper>
             </UserProvider>
           </ApolloProvider>
         </SnackbarProvider>

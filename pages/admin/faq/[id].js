@@ -7,7 +7,6 @@ import EditOutlined from "@material-ui/icons/EditOutlined";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import AdminRequired from "../../../comps/admin/AdminRequired";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
 import BackButton from "../../../comps/admin/BackButton";
 import confirmDialog from "../../../comps/dialog/confirmDialog";
@@ -126,14 +125,12 @@ export default function AdminFAQ() {
 
   if (loading || isDeleting) {
     return (
-      <AdminRequired>
-        <div className={styles.container}>
-          <AdminHeading />
-          <div className={styles.center}>
-            <CircularProgress />
-          </div>
+      <div className={styles.container}>
+        <AdminHeading />
+        <div className={styles.center}>
+          <CircularProgress />
         </div>
-      </AdminRequired>
+      </div>
     );
   }
 
@@ -141,63 +138,59 @@ export default function AdminFAQ() {
 
   if (!isValidId || !faq) {
     return (
-      <AdminRequired>
-        <div className={styles.container}>
-          <AdminHeading />
-          <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
+      <div className={styles.container}>
+        <AdminHeading />
+        <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
 
-          <Typography variant={"h4"}>There's no faq with that id</Typography>
-        </div>
-      </AdminRequired>
+        <Typography variant={"h4"}>There's no faq with that id</Typography>
+      </div>
     );
   }
 
   return (
-    <AdminRequired>
-      <div className={styles.container}>
-        <AdminHeading />
+    <div className={styles.container}>
+      <AdminHeading />
 
-        <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
+      <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
 
-        <Typography variant={"h5"} align={"center"} gutterBottom>
-          Manage FAQ
-        </Typography>
+      <Typography variant={"h5"} align={"center"} gutterBottom>
+        Manage FAQ
+      </Typography>
 
-        {!isEditing && (
-          <div className={styles.center}>
-            <Button
-              children={"Edit"}
-              variant={"contained"}
-              startIcon={<EditOutlined />}
-              color={"primary"}
-              className={styles.editButton}
-              onClick={() => setIsEditing(true)}
-            />
-
-            <Button
-              children={"Delete"}
-              variant={"outlined"}
-              startIcon={<DeleteOutlined />}
-              className={styles.deleteButton}
-              onClick={handleDelete}
-            />
-          </div>
-        )}
-
+      {!isEditing && (
         <div className={styles.center}>
-          <FAQForm
-            initialValues={faq}
-            disabled={!isEditing}
-            showCancelButton
-            submitLabel={"Save"}
-            onSubmit={onSave}
-            onCancel={({ resetForm }) => {
-              resetForm();
-              setIsEditing(false);
-            }}
+          <Button
+            children={"Edit"}
+            variant={"contained"}
+            startIcon={<EditOutlined />}
+            color={"primary"}
+            className={styles.editButton}
+            onClick={() => setIsEditing(true)}
+          />
+
+          <Button
+            children={"Delete"}
+            variant={"outlined"}
+            startIcon={<DeleteOutlined />}
+            className={styles.deleteButton}
+            onClick={handleDelete}
           />
         </div>
+      )}
+
+      <div className={styles.center}>
+        <FAQForm
+          initialValues={faq}
+          disabled={!isEditing}
+          showCancelButton
+          submitLabel={"Save"}
+          onSubmit={onSave}
+          onCancel={({ resetForm }) => {
+            resetForm();
+            setIsEditing(false);
+          }}
+        />
       </div>
-    </AdminRequired>
+    </div>
   );
 }
