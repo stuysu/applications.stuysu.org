@@ -101,7 +101,7 @@ export default function FAQPreview() {
             <Button
               startIcon={<EditOutlined />}
               variant={"outlined"}
-              color={"primary"}
+              color={"secondary"}
             >
               Edit This FAQ
             </Button>

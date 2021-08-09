@@ -123,7 +123,7 @@ export default function FAQAdmin() {
                       <Button
                         children={"Edit"}
                         variant="contained"
-                        color="primary"
+                        color="secondary"
                         startIcon={<EditOutlined />}
                       />
                     </Link>

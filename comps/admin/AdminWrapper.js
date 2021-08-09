@@ -13,8 +13,10 @@ export default function AdminWrapper({ children }) {
   if (router.pathname.startsWith("/admin")) {
     if (!user.loaded) {
       return (
-        <div className={styles.center}>
-          <CircularProgress />
+        <div className={styles.container}>
+          <div className={styles.center}>
+            <CircularProgress />
+          </div>
         </div>
       );
     }

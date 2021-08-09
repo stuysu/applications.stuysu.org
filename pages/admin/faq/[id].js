@@ -163,7 +163,7 @@ export default function AdminFAQ() {
             children={"Edit"}
             variant={"contained"}
             startIcon={<EditOutlined />}
-            color={"primary"}
+            color={"secondary"}
             className={styles.editButton}
             onClick={() => setIsEditing(true)}
           />
