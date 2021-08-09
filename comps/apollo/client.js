@@ -6,7 +6,7 @@ const client = new ApolloClient({
   uri: "/api/graphql",
   credentials: "include",
   headers: {
-    authorization: localStorage.getItem("jwt"),
+    authorization: globalThis.localStorage?.getItem("jwt"),
   },
   cache,
 });
