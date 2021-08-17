@@ -5,7 +5,7 @@ import User from "../../../models/user";
 import getIdTokenPayload from "../../../utils/auth/getIdTokenPayload";
 import validateIdTokenPayload from "../../../utils/auth/validateIdTokenPayload";
 
-export default async (_, { accessToken, idToken }, { signedIn, setCookie }) => {
+export default async (_, { idToken }, { signedIn, setCookie }) => {
   if (signedIn) {
     throw new ForbiddenError("You are already signed in.");
   }

@@ -1,94 +1,78 @@
 import { gql, useMutation } from "@apollo/client";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
+import { CircularProgress } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import GoogleLogin from "react-google-login";
+import { useContext, useEffect, useRef, useState } from "react";
 import { GOOGLE_CLIENT_ID } from "../../constants";
+import generateAuthorizationUrl from "../../utils/auth/generateAuthorizationUrl";
+import useScript from "../../utils/hooks/useScript";
 import alertDialog from "../dialog/alertDialog";
+import UserContext from "./UserContext";
 
-const LOGIN_MUTATION = gql`
+const MUTATION = gql`
   mutation ($idToken: JWT!) {
     login(idToken: $idToken)
   }
 `;
 
-const driveScope = "https://www.googleapis.com/auth/drive.file";
-
 export default function LoginButton() {
-  const [login, { loading }] = useMutation(LOGIN_MUTATION);
-  const { enqueueSnackbar } = useSnackbar();
+  const [login, { loading }] = useMutation(MUTATION);
+  const scriptStatus = useScript("https://accounts.google.com/gsi/client");
+  const [initialized, setInitialized] = useState(false);
+  const user = useContext(UserContext);
+  const ref = useRef(null);
   const router = useRouter();
 
-  const showDriveDialog = () =>
-    alertDialog({
-      title: "Must Authorize Google Drive",
-      body: (
-        <>
-          <Typography variant={"body1"} paragraph gutterBottom>
-            This app needs the ability to store its app data in your Google
-            Drive to function properly. To get a better understanding of why,
-            visit this url:
-          </Typography>
-          <Link href={"/faq/why-google-drive"} target={"_blank"}>
-            https://applications.stuysu.org/faq/why-google-drive.
-          </Link>
-        </>
-      ),
-    });
+  useEffect(() => {
+    const callback = async ({ credential }) => {
+      // Credential is a jwt with the user info.
+      // We're going to use it to login first and that'll let us know if it's valid
+      // If it's valid with can deconstruct it locally without needing to verify it again
+      try {
+        const { data } = await login({ variables: { idToken: credential } });
 
-  const onFailure = er => {
-    if (er.error === "popup_closed_by_user") {
-      // Do nothing
-    } else if (
-      er.message === "Drive Not Authorized" ||
-      er.error === "access_denied"
-    ) {
-      showDriveDialog();
-    } else {
-      enqueueSnackbar(er.message, { variant: "error" });
-    }
-  };
+        window.localStorage.setItem("jwt", data.login);
 
-  const onSignIn = async data => {
-    const { accessToken, tokenId: idToken } = data;
-    const { scope } = data.getAuthResponse(true);
-
-    try {
-      if (!scope.includes(driveScope)) {
-        throw new Error("Drive Not Authorized");
+        const profile = JSON.parse(atob(credential.split(".")[1]));
+        window.location.href = generateAuthorizationUrl({
+          hint: profile.sub,
+          prompt: "none",
+          state: router.asPath,
+        });
+      } catch (e) {
+        await alertDialog({ title: "Error Logging In", body: e.message });
       }
-
-      const { data } = await login({
-        variables: { idToken },
+    };
+    if (user.loaded && !user.signedIn && scriptStatus === "ready") {
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        cancel_on_tap_outside: true,
+        callback,
+        hosted_domain: "stuy.edu",
       });
-      localStorage.setItem("jwt", data.login);
 
-      const url = new globalThis.URL(
-        "/setup-anonymity-secret",
-        window.location.origin
-      );
+      setInitialized(true);
 
-      window.sessionStorage.setItem("accessToken", accessToken);
-
-      url.searchParams.append("referrer", router.asPath);
-
-      window.location.href = url.href;
-    } catch (er) {
-      onFailure(er);
+      window.google.accounts.id.prompt(notification => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          // continue with another identity provider.
+          console.log("One Tap isn't supported in this browser");
+        }
+      });
     }
-  };
+  }, [user, scriptStatus]);
 
-  return (
-    <GoogleLogin
-      clientId={GOOGLE_CLIENT_ID}
-      buttonText="Login with Google"
-      onSuccess={onSignIn}
-      onFailure={onFailure}
-      cookiePolicy={"single_host_origin"}
-      hostedDomain={"stuy.edu"}
-      scope={driveScope}
-      disabled={loading}
-    />
-  );
+  useEffect(() => {
+    if (initialized && ref.current) {
+      window.google.accounts.id.renderButton(ref.current, {
+        type: "standard",
+        size: "medium",
+      });
+    }
+  }, [initialized, ref.current]);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  return <div ref={ref} />;
 }

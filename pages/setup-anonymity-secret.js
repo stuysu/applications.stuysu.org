@@ -1,10 +1,14 @@
 import { gql, useMutation } from "@apollo/client";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
+import qs from "querystring";
 import { useCallback, useContext, useEffect, useState } from "react";
 import UserContext from "../comps/auth/UserContext";
+import confirmDialog from "../comps/dialog/confirmDialog";
 import styles from "../styles/Home.module.css";
+import generateAuthorizationUrl from "../utils/auth/generateAuthorizationUrl";
 
 const EDIT_MUTATION = gql`
   mutation ($fileId: NonEmptyString!) {
@@ -17,8 +21,56 @@ export default function SetupAnonymitySecret() {
   const router = useRouter();
   const { referrer } = router.query;
   const [edit] = useMutation(EDIT_MUTATION);
-  const [error, setError] = useState(false);
-  const accessToken = globalThis?.sessionStorage?.getItem("accessToken");
+  const [prompting, setPrompting] = useState(false);
+  const hash = qs.parse(
+    router.asPath.substring(router.asPath.indexOf("#") + 1)
+  );
+  const accessToken = hash.access_token;
+
+  const userNeedsToAuthorize =
+    !accessToken ||
+    hash.error === "interaction_required" ||
+    !hash.scope?.includes("https://www.googleapis.com/auth/drive.file");
+
+  useEffect(() => {
+    if (!user.loaded) {
+      return;
+    }
+
+    if (user.signedIn && userNeedsToAuthorize && !prompting) {
+      setPrompting(true);
+      confirmDialog({
+        title: "One more step",
+        body: (
+          <>
+            <Typography variant={"body1"} paragraph gutterBottom>
+              This app needs the ability to store its app data in your Google
+              Drive to function properly. You'll only need to do this once. To
+              get a better understanding of why, visit this url:
+              <br />
+              <Link href={"/faq/why-google-drive"} target={"_blank"}>
+                https://applications.stuysu.org/faq/why-google-drive.
+              </Link>
+            </Typography>
+            <Typography variant={"body1"} paragraph>
+              Click <b>Confirm</b> and we'll attempt the authorization
+              procedure.
+            </Typography>
+          </>
+        ),
+      }).then(async auth => {
+        window.location.replace(
+          auth
+            ? generateAuthorizationUrl({
+                hint: user.email,
+                state: hash.state || "/",
+                prompt: "consent",
+              })
+            : "/"
+        );
+      });
+    }
+  }, [hash, user, prompting]);
 
   const generateSecret = async () => {
     const anonymitySecret = Array.from(
@@ -97,7 +149,7 @@ export default function SetupAnonymitySecret() {
   }, [user]);
 
   useEffect(() => {
-    if (accessToken && user.signedIn) {
+    if (!userNeedsToAuthorize && user.signedIn) {
       getSecret()
         .then(async secret => {
           if (!secret) {
@@ -107,7 +159,7 @@ export default function SetupAnonymitySecret() {
           window.location.href = referrer || "/";
         })
         .catch(er => {
-          setError(er);
+          console.error(er);
         });
     }
   }, [accessToken, user]);
@@ -121,7 +173,6 @@ export default function SetupAnonymitySecret() {
   }
 
   if (!user.signedIn || !accessToken) {
-    router.push("/");
     return null;
   }
 

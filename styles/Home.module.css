@@ -16,6 +16,11 @@
   align-items: center;
 }
 
+.mediumContentContainer {
+  width: 600px;
+  max-width: 90vw;
+}
+
 .title {
   margin: 0;
   line-height: 1.15;
