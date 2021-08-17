@@ -9,3 +9,8 @@
   padding: 5rem 1rem;
   min-height: 80vh;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+}
