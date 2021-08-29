@@ -3,11 +3,17 @@ import { gql } from "apollo-server-micro";
 export default gql`
   type Application {
     id: ObjectID!
-    name: String!
+    title: NonEmptyString!
+    url: NonEmptyString!
+    link: String!
+    embed: Boolean!
+    type: AnonymityType!
     color: HexColorCode!
-    description: String!
+    more: String!
     active: Boolean!
     archived: Boolean!
+
+    deadline: DateTime!
     createdAt: DateTime!
     updatedAt: DateTime!
   }

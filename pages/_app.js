@@ -4,6 +4,7 @@ import { SnackbarProvider } from "notistack";
 import AdminWrapper from "../comps/admin/AdminWrapper";
 import client from "../comps/apollo/client";
 import UserProvider from "../comps/auth/UserProvider";
+import DateProvider from "../comps/date/DateProvider";
 import SharedDialog from "../comps/dialog/SharedDialog";
 import Navigation from "../comps/nav/Navigation";
 import ThemeContext from "../comps/theme/ThemeContext";
@@ -22,11 +23,13 @@ function MyApp({ Component, pageProps }) {
           <SharedDialog />
           <ApolloProvider client={client}>
             <UserProvider>
-              <AdminWrapper>
-                <Navigation />
-                <Component {...pageProps} />
-                <Footer />
-              </AdminWrapper>
+              <DateProvider>
+                <AdminWrapper>
+                  <Navigation />
+                  <Component {...pageProps} />
+                  <Footer />
+                </AdminWrapper>
+              </DateProvider>
             </UserProvider>
           </ApolloProvider>
         </SnackbarProvider>

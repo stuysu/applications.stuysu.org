@@ -62,5 +62,10 @@ export default gql`
     Takes a url and returns the FAQ associated or null if no faqs have that url
     """
     faqByUrl(url: NonEmptyString!): FAQ
+
+    """
+    Returns the current date on the server
+    """
+    date: DateTime!
   }
 `;

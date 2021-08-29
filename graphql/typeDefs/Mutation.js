@@ -20,6 +20,33 @@ export default gql`
 
     deleteFAQ(id: ObjectID!): Void
 
+    createApplication(
+      title: NonEmptyString!
+      url: NonEmptyString!
+      link: String!
+      embed: Boolean!
+      type: AnonymityType!
+      deadline: DateTime!
+      color: HexColorCode!
+      more: String!
+    ): Application!
+
+    editApplication(
+      id: ObjectID!
+      title: NonEmptyString!
+      url: NonEmptyString!
+      link: String!
+      embed: Boolean!
+      type: AnonymityType!
+      deadline: DateTime!
+      color: HexColorCode!
+      more: String!
+      active: Boolean!
+      archived: Boolean!
+    ): Application!
+
+    deleteApplication(id: ObjectID!): Void
+
     editGoogleDriveAnonymityFileId(fileId: NonEmptyString!): Void
   }
 `;

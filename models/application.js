@@ -24,10 +24,12 @@ const ApplicationSchema = new Schema({
   // If hybrid this will contain an array of email addresses
   applicants: [String],
 
+  deadline: Date,
+
   createdAt: Date,
   updatedAt: Date,
 
-  status: Boolean,
+  active: Boolean,
   archived: Boolean,
 });
 

@@ -1,4 +1,6 @@
-import { Switch } from "@material-ui/core";
+// pick a date util library
+import MomentUtils from "@date-io/moment";
+import { FormGroup, FormLabel, Switch } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
@@ -8,9 +10,17 @@ import Grid from "@material-ui/core/Grid";
 import StyledLink from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import {
+  KeyboardDateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 import { useFormik } from "formik";
 import isUrl from "is-url";
+import moment from "moment";
+import { useContext } from "react";
 import { TwitterPicker } from "react-color";
+import getReadableDuration from "../../utils/date/getReadableDuration";
+import { DateContext } from "../date/DateContext";
 import TinyEditor from "../shared/TinyEditor";
 import styles from "./ApplicationForm.module.css";
 
@@ -35,6 +45,10 @@ async function validate(values) {
 
   if (values.link && !isUrl(values.link)) {
     errors.link = "The provided url is not valid";
+  }
+
+  if (!values.deadline) {
+    errors.deadline = "Required";
   }
 
   return errors;
@@ -76,14 +90,17 @@ export default function ApplicationForm({
       body: "",
       link: "",
       embed: false,
-      hybrid: false,
+      type: "anonymous",
       color: "#6c5ce7",
       more: "",
+      deadline: null,
     },
     validateOnChange: false,
     onSubmit,
     validate,
   });
+
+  const { getNow } = useContext(DateContext);
 
   const handleTitleChange = ev => {
     const titleWasModified = getDefaultUrl(values.title) !== values.url;
@@ -99,6 +116,19 @@ export default function ApplicationForm({
   const handleUrlChange = ev => {
     setFieldValue("url", getDefaultUrl(ev.target.value));
   };
+
+  let deadlineText;
+
+  const now = getNow();
+
+  if (values.deadline) {
+    const prefix = values.deadline > new Date() ? "In " : "";
+    const end = values.deadline < new Date() ? " Ago" : "";
+    const deadline = moment(values.deadline);
+
+    const duration = moment.duration(Math.abs(deadline.diff(now)));
+    deadlineText = prefix + getReadableDuration(duration) + end;
+  }
 
   return (
     <div className={styles.root}>
@@ -176,8 +206,13 @@ export default function ApplicationForm({
             <Grid item>Fully Anonymous</Grid>
             <Grid item>
               <Switch
-                checked={values.hybrid}
-                onChange={() => setFieldValue("hybrid", !values.hybrid)}
+                checked={values.type === "hybrid"}
+                onChange={() =>
+                  setFieldValue(
+                    "type",
+                    values.type === "hybrid" ? "anonymous" : "hybrid"
+                  )
+                }
                 name="hybrid"
               />
             </Grid>
@@ -195,6 +230,44 @@ export default function ApplicationForm({
           </FormHelperText>
         </Typography>
       </div>
+
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <FormGroup row className={styles.deadline}>
+          <FormControl component="fieldset" disabled={disabled || isSubmitting}>
+            <FormLabel
+              component="legend"
+              className={styles.deadlineLabel}
+              disabled={disabled || isSubmitting}
+            >
+              Deadline
+            </FormLabel>
+            <KeyboardDateTimePicker
+              variant="inline"
+              inputVariant={"outlined"}
+              value={values.deadline}
+              onChange={val =>
+                setFieldError("deadline", null) & setFieldValue("deadline", val)
+              }
+              onError={console.log}
+              format="MM/DD/yyyy hh:mma"
+              ampm
+              onBlur={handleBlur}
+              name={"deadline"}
+              error={
+                (touched.deadline && !!errors.deadline) ||
+                (values.deadline && values.deadline < now)
+              }
+              helperText={
+                touched.deadline && errors.deadline
+                  ? errors.deadline
+                  : deadlineText
+              }
+              disabled={disabled || isSubmitting}
+              placeholder="05/05/2021 06:00am"
+            />
+          </FormControl>
+        </FormGroup>
+      </MuiPickersUtilsProvider>
 
       <div className={styles.color}>
         <Typography

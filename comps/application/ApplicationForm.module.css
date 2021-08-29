@@ -33,6 +33,14 @@
   font-weight: bold;
 }
 
+.deadline {
+  margin: 2rem 1rem;
+}
+
+.deadlineLabel {
+  margin-bottom: 0.5rem;
+}
+
 .picker {
   margin: 1rem 0;
 }
