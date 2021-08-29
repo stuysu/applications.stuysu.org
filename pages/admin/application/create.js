@@ -16,7 +16,7 @@ export default function CreateApplication() {
       </Typography>
 
       <div className={styles.center}>
-        <ApplicationForm />
+        <ApplicationForm submitLabel={"Create"} />
       </div>
     </div>
   );

@@ -1,9 +1,44 @@
+import { Switch } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Grid from "@material-ui/core/Grid";
+import StyledLink from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import { useFormik } from "formik";
+import isUrl from "is-url";
+import { TwitterPicker } from "react-color";
+import TinyEditor from "../shared/TinyEditor";
 import styles from "./ApplicationForm.module.css";
 
-async function validate(values) {}
+async function validate(values) {
+  const errors = {};
+
+  if (!values.title) {
+    errors.title = "Required";
+  }
+
+  if (values.title?.length > 128) {
+    errors.title = "Title cannot be longer than 128 characters";
+  }
+
+  if (!values.url) {
+    errors.url = "Required";
+  }
+
+  if (values.url?.length > 128) {
+    errors.url = "Url cannot be longer than 128 characters";
+  }
+
+  if (values.link && !isUrl(values.link)) {
+    errors.link = "The provided url is not valid";
+  }
+
+  return errors;
+}
 
 function getDefaultUrl(title) {
   return title
@@ -39,6 +74,11 @@ export default function ApplicationForm({
       title: "",
       url: "",
       body: "",
+      link: "",
+      embed: false,
+      hybrid: false,
+      color: "#6c5ce7",
+      more: "",
     },
     validateOnChange: false,
     onSubmit,
@@ -62,37 +102,135 @@ export default function ApplicationForm({
 
   return (
     <div className={styles.root}>
-      <TextField
-        className={styles.textField}
-        label={"Title"}
-        value={values.title}
-        onChange={handleTitleChange}
-        name={"title"}
-        variant={"outlined"}
-        error={touched.title && !!errors.title}
-        helperText={touched.title && errors.title}
-        placeholder={"Sophomore Caucus Staff Applications 2019-2020"}
-        disabled={disabled || isSubmitting}
-        onBlur={handleBlur}
-      />
+      <div>
+        <TextField
+          className={styles.textField}
+          label={"Title"}
+          value={values.title}
+          onChange={handleTitleChange}
+          name={"title"}
+          variant={"outlined"}
+          error={touched.title && !!errors.title}
+          helperText={touched.title && errors.title}
+          placeholder={"Sophomore Caucus Staff Applications 2019-2020"}
+          disabled={disabled || isSubmitting}
+          onBlur={handleBlur}
+        />
 
-      <TextField
-        label={"URL"}
-        value={values.url}
-        onChange={handleUrlChange}
-        name={"url"}
-        variant={"outlined"}
-        error={touched.url && !!errors.url}
-        helperText={
-          touched.url && errors.url
-            ? errors.url
-            : "applications.stuysu.org/application/" + values.url
-        }
-        placeholder={"sophomore-caucus-staff-19-20"}
-        disabled={disabled || isSubmitting}
-        onBlur={handleBlur}
-        className={styles.textField}
-      />
+        <TextField
+          label={"URL"}
+          value={values.url}
+          onChange={handleUrlChange}
+          name={"url"}
+          variant={"outlined"}
+          error={touched.url && !!errors.url}
+          helperText={
+            touched.url && errors.url
+              ? errors.url
+              : "applications.stuysu.org/application/" + values.url
+          }
+          placeholder={"sophomore-caucus-staff-19-20"}
+          disabled={disabled || isSubmitting}
+          onBlur={handleBlur}
+          className={styles.textField}
+        />
+      </div>
+
+      <div>
+        <TextField
+          label={"Link To Application"}
+          value={values.link}
+          name={"link"}
+          onChange={handleChange}
+          variant={"outlined"}
+          error={touched.link && errors.link}
+          helperText={touched.link && errors.link}
+          placeholder={"https://forms.google.com/xxx-xxx-xxx"}
+          disabled={disabled || isSubmitting}
+          onBlur={handleBlur}
+          className={styles.largeTextField}
+        />
+      </div>
+
+      <div className={styles.checkbox}>
+        <FormControl>
+          <FormControlLabel
+            disabled={disabled || isSubmitting || !values.link}
+            control={
+              <Checkbox
+                checked={values.link && values.embed}
+                onChange={() => setFieldValue("embed", !values.embed)}
+                name={"embed"}
+                disabled={disabled || isSubmitting || !values.link}
+              />
+            }
+            label="Embed Form On Site"
+          />
+          <FormHelperText>Only Google Forms can be embedded</FormHelperText>
+        </FormControl>
+      </div>
+
+      <div className={styles.switch}>
+        <Typography component="div">
+          <Grid component="label" container alignItems="center" spacing={1}>
+            <Grid item>Fully Anonymous</Grid>
+            <Grid item>
+              <Switch
+                checked={values.hybrid}
+                onChange={() => setFieldValue("hybrid", !values.hybrid)}
+                name="hybrid"
+              />
+            </Grid>
+            <Grid item>Hybrid Anonymity</Grid>
+          </Grid>
+          <FormHelperText>
+            For more information on the difference{" "}
+            <StyledLink
+              href={"/faq/what-is-hybrid-anonymity"}
+              target={"_blank"}
+              referrerPolicy={"no-referrer"}
+            >
+              click here
+            </StyledLink>
+          </FormHelperText>
+        </Typography>
+      </div>
+
+      <div className={styles.color}>
+        <Typography
+          gutterBottom
+          variant={"body1"}
+          className={styles.label}
+          style={{ color: values.color }}
+        >
+          Application Color
+        </Typography>
+        <FormHelperText>
+          This will show up alongside the application. Use this to help
+          distinguish your application from others when there are multiple at
+          the same time
+        </FormHelperText>
+        <TwitterPicker
+          className={styles.picker}
+          color={values.color}
+          onChangeComplete={c => setFieldValue("color", c.hex)}
+        />
+      </div>
+
+      <div className={styles.tiny}>
+        <Typography variant={"body1"} className={styles.label} gutterBottom>
+          Any other content you want to display on the application page:
+        </Typography>
+        <TinyEditor
+          value={values.more}
+          disabled={disabled || isSubmitting}
+          setValue={v => setFieldValue("more", v)}
+          helperText={"This field is optional and can be left empty"}
+          placeholder={
+            "(Optional) i.e. This application will close on September 1st, 11:59pm"
+          }
+        />
+      </div>
 
       <hr className={styles.hr} />
 

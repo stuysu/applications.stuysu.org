@@ -4,12 +4,37 @@
   max-width: 90%;
 }
 
+.checkbox {
+  margin: 0.3rem 1rem;
+}
+
+.switch {
+  margin: 1.5rem 1rem;
+}
+
+.largeTextField {
+  margin: 1rem;
+  width: calc(800px + 2rem);
+}
+
 .tinyEditor {
   margin: 1rem;
 }
 
 .button {
   margin: 1rem;
+}
+
+.color {
+  margin: 1rem;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.picker {
+  margin: 1rem 0;
 }
 
 .hr {
@@ -24,4 +49,13 @@
   .tinyEditor {
     max-width: 95%;
   }
+
+  .largeTextField {
+    max-width: 90%;
+  }
+}
+
+
+.tiny {
+  padding: 1rem;
 }

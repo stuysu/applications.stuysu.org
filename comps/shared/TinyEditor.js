@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
@@ -30,6 +30,7 @@ const TinyEditor = ({
   className,
   disabled,
   helperText,
+  placeholder,
   error,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -44,6 +45,7 @@ const TinyEditor = ({
           height: 400,
           menubar: false,
           default_link_target: "_blank",
+          placeholder,
           plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
@@ -88,11 +90,7 @@ const TinyEditor = ({
         disabled={disabled}
         onEditorChange={newValue => setValue(newValue)}
       />
-      <Typography
-        variant={"subtitle2"}
-        color={error ? "error" : undefined}
-        children={helperText}
-      />
+      <FormHelperText error={error}>{helperText}</FormHelperText>
     </div>
   );
 };

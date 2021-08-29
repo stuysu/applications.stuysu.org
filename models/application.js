@@ -5,6 +5,11 @@ import queryApplications from "./statics/application/queryApplications";
 const Schema = mongoose.Schema;
 
 const ApplicationSchema = new Schema({
+  title: String,
+  url: String,
+  link: String,
+  embed: Boolean,
+
   type: [
     {
       type: String,
@@ -12,11 +17,16 @@ const ApplicationSchema = new Schema({
       default: "anonymous",
     },
   ],
-  title: String,
-  description: String,
+
   color: String,
+  more: String,
+
+  // If hybrid this will contain an array of email addresses
+  applicants: [String],
+
   createdAt: Date,
   updatedAt: Date,
+
   status: Boolean,
   archived: Boolean,
 });
