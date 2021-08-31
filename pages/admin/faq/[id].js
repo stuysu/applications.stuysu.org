@@ -50,6 +50,8 @@ const EDIT_MUTATION = gql`
 
 const AdminHeading = () => (
   <>
+    <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
+
     <Typography variant={"h4"} align={"center"}>
       Admin Panel
     </Typography>
@@ -140,9 +142,10 @@ export default function AdminFAQ() {
     return (
       <div className={styles.container}>
         <AdminHeading />
-        <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
 
-        <Typography variant={"h4"}>There's no faq with that id</Typography>
+        <Typography variant={"h4"} align={"center"}>
+          There's no faq with that id
+        </Typography>
       </div>
     );
   }
@@ -150,8 +153,6 @@ export default function AdminFAQ() {
   return (
     <div className={styles.container}>
       <AdminHeading />
-
-      <BackButton href={"/admin/faq"} label={"Back To FAQs"} />
 
       <Typography variant={"h5"} align={"center"} gutterBottom>
         Manage FAQ

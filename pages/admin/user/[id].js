@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
-import ArrowBackIosOutlined from "@material-ui/icons/ArrowBackIosOutlined";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
@@ -38,6 +36,8 @@ const EDIT_MUTATION = gql`
 
 const AdminHeading = () => (
   <>
+    <BackButton href={"/admin/user"} label={"Back To Users"} />
+
     <Typography variant={"h4"} align={"center"}>
       Admin Panel
     </Typography>
@@ -90,19 +90,6 @@ export default function EditUser() {
         >
           That ID is not valid.
         </Typography>
-        <div className={styles.center}>
-          <Link href={"/admin/user"}>
-            <a>
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                startIcon={<ArrowBackIosOutlined />}
-              >
-                Back To Users
-              </Button>
-            </a>
-          </Link>
-        </div>
       </div>
     );
   }
@@ -134,7 +121,6 @@ export default function EditUser() {
         >
           There is no user with that id
         </Typography>
-        <BackButton href={"/admin/user"} label={"Back To Users"} />
       </div>
     );
   }
@@ -142,7 +128,6 @@ export default function EditUser() {
   return (
     <div className={styles.container}>
       <AdminHeading />
-      <BackButton href={"/admin/user"} label={"Back To Users"} />
 
       <Typography variant={"h5"} align={"center"} gutterBottom>
         Manage User

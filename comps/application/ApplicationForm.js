@@ -188,7 +188,7 @@ export default function ApplicationForm({
             disabled={disabled || isSubmitting || !values.link}
             control={
               <Checkbox
-                checked={values.link && values.embed}
+                checked={!!values.link && !!values.embed}
                 onChange={() => setFieldValue("embed", !values.embed)}
                 name={"embed"}
                 disabled={disabled || isSubmitting || !values.link}
@@ -249,7 +249,7 @@ export default function ApplicationForm({
               onChange={val =>
                 setFieldError("deadline", null) & setFieldValue("deadline", val)
               }
-              onError={console.log}
+              onError={(...e) => console.log("moment error", ...e)}
               format="MM/DD/yyyy hh:mma"
               ampm
               onBlur={handleBlur}

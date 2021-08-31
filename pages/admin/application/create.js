@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
+import BackButton from "../../../comps/admin/BackButton";
 import ApplicationForm from "../../../comps/application/ApplicationForm";
 import styles from "./../../../styles/Admin.module.css";
 
@@ -63,6 +64,7 @@ export default function CreateApplication() {
 
   return (
     <div className={styles.container}>
+      <BackButton label={"Back To Applications"} href={"/admin/application"} />
       <Typography variant={"h4"} align={"center"}>
         Admin Panel
       </Typography>
