@@ -23,6 +23,8 @@ export default async ({ page, resultsPerPage, query, filters }) => {
 
   const results = await Application.find(filter)
     .sort([
+      ["archived", "asc"],
+      ["deadline", "desc"],
       ["title", "asc"],
       ["color", "asc"],
       ["createdAt", "desc"],

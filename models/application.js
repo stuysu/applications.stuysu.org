@@ -10,13 +10,11 @@ const ApplicationSchema = new Schema({
   link: String,
   embed: Boolean,
 
-  type: [
-    {
-      type: String,
-      values: ["anonymous", "hybrid"],
-      default: "anonymous",
-    },
-  ],
+  type: {
+    type: String,
+    values: ["anonymous", "hybrid"],
+    default: "anonymous",
+  },
 
   color: String,
   more: String,

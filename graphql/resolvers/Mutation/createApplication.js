@@ -9,6 +9,7 @@ export default async (
 ) => {
   adminRequired();
 
+  console.log(type);
   if (link && !isUrl(link)) {
     throw new UserInputError(
       "The provided url for the application is not valid"
@@ -37,11 +38,12 @@ export default async (
     title,
     url,
     link,
-    embed,
     type,
     deadline,
     color,
     more,
+
+    embed: link ? embed : false,
     applicants: type === "hybrid" ? [] : null,
 
     createdAt: new Date(),

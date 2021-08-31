@@ -8,6 +8,11 @@ export default gql`
     authenticatedUser: User
 
     """
+    Takes an Object ID and returns the associated Application
+    """
+    applicationById(id: ObjectID!): Application
+
+    """
     Returns all applications that aren't archived
     Authentication is required
     """
@@ -15,7 +20,7 @@ export default gql`
       query: String! = ""
       page: PositiveInt! = 1
       resultsPerPage: PositiveInt! = 15
-    ): [Application!]!
+    ): PaginatedApplicationResult!
 
     """
     Returns a paginated set of all applications with archived set to true
@@ -25,7 +30,17 @@ export default gql`
       query: String! = ""
       page: PositiveInt! = 1
       resultsPerPage: PositiveInt! = 15
-    ): [Application!]!
+    ): PaginatedApplicationResult!
+
+    """
+    Returns a paginated set of all applications
+    Authentication is required
+    """
+    applications(
+      query: String! = ""
+      page: PositiveInt! = 1
+      resultsPerPage: PositiveInt! = 15
+    ): PaginatedApplicationResult!
 
     """
     Takes an id and returns the associated user.

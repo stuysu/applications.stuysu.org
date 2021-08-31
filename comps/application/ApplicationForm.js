@@ -206,6 +206,7 @@ export default function ApplicationForm({
             <Grid item>Fully Anonymous</Grid>
             <Grid item>
               <Switch
+                disabled={disabled || isSubmitting}
                 checked={values.type === "hybrid"}
                 onChange={() =>
                   setFieldValue(
@@ -283,11 +284,13 @@ export default function ApplicationForm({
           distinguish your application from others when there are multiple at
           the same time
         </FormHelperText>
-        <TwitterPicker
-          className={styles.picker}
-          color={values.color}
-          onChangeComplete={c => setFieldValue("color", c.hex)}
-        />
+        {!disabled && !isSubmitting && (
+          <TwitterPicker
+            className={styles.picker}
+            color={values.color}
+            onChangeComplete={c => setFieldValue("color", c.hex)}
+          />
+        )}
       </div>
 
       <div className={styles.tiny}>
