@@ -2,8 +2,10 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
-import { ArchiveOutlined, RestoreOutlined } from "@material-ui/icons";
+import ArchiveOutlined from "@material-ui/icons/ArchiveOutlined";
+import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
+import RestoreOutlined from "@material-ui/icons/RestoreOutlined";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
@@ -77,6 +79,12 @@ const MUTATION = gql`
   }
 `;
 
+const DELETE_MUTATION = gql`
+  mutation ($id: ObjectID!) {
+    deleteApplication(id: $id)
+  }
+`;
+
 export default function CreateApplication() {
   const [edit, { loading: saving }] = useMutation(MUTATION);
   const router = useRouter();
@@ -85,8 +93,31 @@ export default function CreateApplication() {
     variables: { id },
     skip: !id,
   });
+
+  const [deleteApplication, { loading: deleting }] =
+    useMutation(DELETE_MUTATION);
+
   const [editing, setEditing] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleDelete = async () => {
+    const confirmation = await confirmDialog({
+      title: "Confirm Deletion",
+      body: "Are you sure you want to delete this application? This action is irreversible. You should never need to do this. You can typically just archive applications after they're completed.",
+    });
+
+    if (confirmation) {
+      try {
+        await deleteApplication({ variables: { id } });
+        enqueueSnackbar("Application successfully deleted", {
+          variant: "success",
+        });
+        await router.push("/admin/application");
+      } catch (e) {
+        enqueueSnackbar(e.message, { variant: "error" });
+      }
+    }
+  };
 
   const archive = async () => {
     const confirmation = await confirmDialog({
@@ -213,6 +244,7 @@ export default function CreateApplication() {
                 color={"primary"}
                 className={styles.editButton}
                 onClick={() => setEditing(true)}
+                disabled={deleting}
               >
                 Edit
               </Button>
@@ -223,6 +255,7 @@ export default function CreateApplication() {
                 color={"secondary"}
                 className={styles.editButton}
                 onClick={archive}
+                disabled={deleting}
               >
                 Archive
               </Button>
@@ -236,12 +269,18 @@ export default function CreateApplication() {
               color={"primary"}
               className={styles.editButton}
               onClick={unarchive}
+              disabled={deleting}
             >
               UnArchive
             </Button>
           )}
 
-          <Button className={styles.deleteButton} variant={"outlined"}>
+          <Button
+            className={styles.deleteButton}
+            variant={"outlined"}
+            onClick={handleDelete}
+            startIcon={deleting ? <CircularProgress /> : <DeleteOutlined />}
+          >
             Delete
           </Button>
         </div>
@@ -266,8 +305,6 @@ export default function CreateApplication() {
               ) {
                 return newVal !== currentVal;
               }
-
-              console.log(newVal.toString(), currentVal.toString());
             });
 
             if (changed) {
