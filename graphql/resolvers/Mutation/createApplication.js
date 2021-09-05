@@ -9,7 +9,6 @@ export default async (
 ) => {
   adminRequired();
 
-  console.log(type);
   if (link && !isUrl(link)) {
     throw new UserInputError(
       "The provided url for the application is not valid"
@@ -51,5 +50,6 @@ export default async (
 
     active: true,
     archived: false,
+    applicantEmails: [],
   });
 };

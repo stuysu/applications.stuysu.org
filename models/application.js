@@ -29,6 +29,8 @@ const ApplicationSchema = new Schema({
 
   active: Boolean,
   archived: Boolean,
+
+  applicantEmails: [String],
 });
 
 ApplicationSchema.statics.idLoader = findOneLoaderFactory("Application");

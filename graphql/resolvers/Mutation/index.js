@@ -8,6 +8,7 @@ import editGoogleDriveAnonymityFileId from "./editGoogleDriveAnonymityFileId";
 import editUser from "./editUser";
 import login from "./login";
 import logout from "./logout";
+import recordApplicantEmailByApplicationId from "./recordApplicantEmailByApplicationId";
 
 export default {
   createFAQ,
@@ -20,4 +21,5 @@ export default {
   login,
   logout,
   editUser,
+  recordApplicantEmailByApplicationId,
 };

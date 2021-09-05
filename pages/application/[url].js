@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Tooltip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -41,17 +41,30 @@ const QUERY = gql`
     }
   }
 `;
+
+const RECORD_EMAIL_MUTATION = gql`
+  mutation ($id: ObjectID!) {
+    recordApplicantEmailByApplicationId(id: $id)
+  }
+`;
+
 export default function ApplicationPage() {
   const router = useRouter();
   const { url } = router.query;
   const user = useContext(UserContext);
   const [anonymityId, setAnonymityId] = useState("");
   const { enqueueSnackbar } = useSnackbar();
-
+  const [recordUserEmail] = useMutation(RECORD_EMAIL_MUTATION);
   const { data, loading } = useQuery(QUERY, {
     variables: { url },
     skip: !user.signedIn,
   });
+
+  useEffect(() => {
+    if (data?.applicationByUrl?.type === "hybrid") {
+      recordUserEmail({ variables: { id: data.applicationByUrl.id } });
+    }
+  }, [data]);
 
   const application = data?.applicationByUrl;
 

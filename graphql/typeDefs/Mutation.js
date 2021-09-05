@@ -45,6 +45,8 @@ export default gql`
       archived: Boolean!
     ): Application!
 
+    recordApplicantEmailByApplicationId(id: ObjectID!): Void
+
     deleteApplication(id: ObjectID!): Void
 
     editGoogleDriveAnonymityFileId(fileId: NonEmptyString!): Void
