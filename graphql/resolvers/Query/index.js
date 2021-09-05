@@ -1,4 +1,5 @@
 import applicationById from "./applicationById";
+import applicationByUrl from "./applicationByUrl";
 import applications from "./applications";
 import archivedApplications from "./archivedApplications";
 import authenticatedUser from "./authenticatedUser";
@@ -12,6 +13,8 @@ import users from "./users";
 
 const Query = {
   applications,
+  applicationById,
+  applicationByUrl,
   archivedApplications,
   authenticatedUser,
   currentApplications,
@@ -21,7 +24,6 @@ const Query = {
   faqs,
   userById,
   users,
-  applicationById,
 };
 
 export default Query;

@@ -15,7 +15,7 @@ import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
-import { DateContext } from "../../../comps/date/DateContext";
+import DateContext from "../../../comps/date/DateContext";
 import styles from "../../../styles/Admin.module.css";
 import getReadableDate from "../../../utils/date/getReadableDate";
 

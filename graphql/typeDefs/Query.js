@@ -13,6 +13,11 @@ export default gql`
     applicationById(id: ObjectID!): Application
 
     """
+    Takes a url string and returns the associated application
+    """
+    applicationByUrl(url: NonEmptyString!): Application
+
+    """
     Returns all applications that aren't archived
     Authentication is required
     """

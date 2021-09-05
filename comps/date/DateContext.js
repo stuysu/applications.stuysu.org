@@ -1,6 +1,8 @@
 import { createContext } from "react";
 
-export const DateContext = createContext({
+const DateContext = createContext({
   offset: 0,
   getNow: () => new Date(),
 });
+
+export default DateContext;

@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { StylesProvider } from "@material-ui/styles";
+import { useRouter } from "next/router";
 import { SnackbarProvider } from "notistack";
 import AdminWrapper from "../comps/admin/AdminWrapper";
 import client from "../comps/apollo/client";
@@ -12,6 +13,9 @@ import Footer from "../comps/ui/Footer";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const { noNavigation } = router.query;
+
   return (
     <StylesProvider injectFirst>
       <ThemeContext>
@@ -25,7 +29,7 @@ function MyApp({ Component, pageProps }) {
             <UserProvider>
               <DateProvider>
                 <AdminWrapper>
-                  <Navigation />
+                  {noNavigation !== "true" && <Navigation />}
                   <Component {...pageProps} />
                   <Footer />
                 </AdminWrapper>

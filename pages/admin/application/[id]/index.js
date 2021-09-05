@@ -9,11 +9,12 @@ import RestoreOutlined from "@material-ui/icons/RestoreOutlined";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import AdminTabBar from "../../../comps/admin/AdminTabBar";
-import BackButton from "../../../comps/admin/BackButton";
-import ApplicationForm from "../../../comps/application/ApplicationForm";
-import confirmDialog from "../../../comps/dialog/confirmDialog";
-import styles from "./../../../styles/Admin.module.css";
+import AdminTabBar from "../../../../comps/admin/AdminTabBar";
+import BackButton from "../../../../comps/admin/BackButton";
+import ApplicationForm from "../../../../comps/application/ApplicationForm";
+import ApplicationTabBar from "../../../../comps/application/ApplicationTabBar";
+import confirmDialog from "../../../../comps/dialog/confirmDialog";
+import styles from "../../../../styles/Admin.module.css";
 
 const QUERY = gql`
   query ($id: ObjectID!) {
@@ -184,11 +185,14 @@ export default function CreateApplication() {
       });
 
       await setEditing(false);
-      enqueueSnackbar("Changes were sucessfully saved", { variant: "success" });
+      enqueueSnackbar("Changes were successfully saved", {
+        variant: "success",
+      });
     } catch (e) {
       enqueueSnackbar("Error: " + e.message, { variant: "error" });
     } finally {
       setSubmitting(false);
+      await refetch();
     }
   };
 
@@ -201,7 +205,6 @@ export default function CreateApplication() {
   }
 
   const application = data?.applicationById;
-
   if (!loading && !application) {
     return (
       <div className={styles.container}>
@@ -230,9 +233,18 @@ export default function CreateApplication() {
       </Typography>
       <AdminTabBar />
 
-      <Typography variant={"h5"} align={"center"}>
+      <Typography
+        variant={"h5"}
+        align={"center"}
+        gutterBottom
+        color={"secondary"}
+      >
         {application.title}
       </Typography>
+
+      <div className={styles.center}>
+        <ApplicationTabBar />
+      </div>
 
       {!editing && (
         <div className={styles.center}>

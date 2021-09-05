@@ -59,15 +59,13 @@ export default function AdminTabBar() {
       centered
     >
       {pages.map(({ label, href, icon }) => (
-        <Link key={label} href={href}>
-          <a>
-            <Tab
-              label={label}
-              icon={icon}
-              color={"secondary"}
-              aria-label={"tab for " + label}
-            />
-          </a>
+        <Link key={label} href={href} passHref>
+          <Tab
+            label={label}
+            icon={icon}
+            color={"secondary"}
+            aria-label={"tab for " + label}
+          />
         </Link>
       ))}
     </Tabs>

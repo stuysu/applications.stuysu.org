@@ -2,7 +2,6 @@ import Typography from "@material-ui/core/Typography";
 import { useContext } from "react";
 import LoginButton from "../auth/LoginButton";
 import UserContext from "../auth/UserContext";
-import Navigation from "../nav/Navigation";
 import styles from "./AuthenticationRequired.module.css";
 
 export default function AuthenticationRequired({ children }) {
@@ -11,7 +10,6 @@ export default function AuthenticationRequired({ children }) {
   if (!user.signedIn) {
     return (
       <div>
-        <Navigation />
         <div className={styles.container}>
           <img
             src={"/authentication.svg"}

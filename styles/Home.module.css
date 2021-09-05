@@ -45,3 +45,60 @@
 .spinner {
   margin: 1rem;
 }
+
+.logoutButton {
+  margin: 1rem;
+}
+
+.iframe {
+  width: 100%;
+  height: 80vh;
+  border: 1px solid rgba(0, 0,0, 0.1);
+  border-radius: 5px;
+  box-shadow: 2px 1px 12px 1px rgba(0, 0, 0, 0.1);
+}
+
+.page {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hr {
+  border: 0;
+  height: 3px;
+  width: 100px;
+  margin-bottom: 1rem;
+}
+
+.idContainer {
+  margin :1.5rem;
+}
+
+.iframeContainer {
+  margin-top: 20px;
+}
+
+.html {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.steps li {
+  overflow-wrap: break-word;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.miniText {
+  font-size: 10px;
+  overflow-wrap: break-word;
+  font-weight: bolder;
+}
+
+.idCodeBox {
+  color: #27ae60;
+  background: rgba(0,0,0,0.05);
+  box-shadow: rgba(0, 0, 0, 0.18) 3px 2px 2px 0px;
+  border-radius: 5px;
+  padding: 5px;
+}

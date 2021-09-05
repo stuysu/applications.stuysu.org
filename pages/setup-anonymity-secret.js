@@ -74,9 +74,9 @@ export default function SetupAnonymitySecret() {
 
   const generateSecret = async () => {
     const anonymitySecret = Array.from(
-      globalThis.crypto.getRandomValues(new Uint32Array(6))
+      globalThis.crypto.getRandomValues(new Uint32Array(5))
     )
-      .map(a => a.toString(16))
+      .map(a => a.toString(16).padStart(2, "0"))
       .join("");
 
     const image = await fetch("/anonymity-secret.png").then(res => res.blob());

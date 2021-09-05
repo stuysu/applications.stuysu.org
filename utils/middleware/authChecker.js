@@ -10,8 +10,8 @@ export default async function authChecker(req, res, next) {
     req.headers["x-access-token"] ||
     req.headers["authorization"];
 
-  if (jwt && jwt.startsWith("Bearer ")) {
-    jwt = jwt.replace("Bearer ", "");
+  if (jwt && jwt.toLowerCase().startsWith("bearer ")) {
+    jwt = jwt.replace(/bearer /i, "");
   }
 
   if (jwt) {

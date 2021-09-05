@@ -1,13 +1,15 @@
 // pick a date util library
 import MomentUtils from "@date-io/moment";
-import { FormGroup, FormLabel, Switch } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import StyledLink from "@material-ui/core/Link";
+import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import {
@@ -17,10 +19,10 @@ import {
 import { useFormik } from "formik";
 import isUrl from "is-url";
 import moment from "moment";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TwitterPicker } from "react-color";
 import getReadableDuration from "../../utils/date/getReadableDuration";
-import { DateContext } from "../date/DateContext";
+import DateContext from "../date/DateContext";
 import TinyEditor from "../shared/TinyEditor";
 import styles from "./ApplicationForm.module.css";
 
@@ -101,6 +103,12 @@ export default function ApplicationForm({
   });
 
   const { getNow } = useContext(DateContext);
+
+  useEffect(() => {
+    if (!values.link) {
+      setFieldValue("embed", false);
+    }
+  }, [values.link]);
 
   const handleTitleChange = ev => {
     const titleWasModified = getDefaultUrl(values.title) !== values.url;
@@ -222,7 +230,7 @@ export default function ApplicationForm({
           <FormHelperText>
             For more information on the difference{" "}
             <StyledLink
-              href={"/faq/what-is-hybrid-anonymity"}
+              href={"/faq/what-are-anonymity-types"}
               target={"_blank"}
               referrerPolicy={"no-referrer"}
             >

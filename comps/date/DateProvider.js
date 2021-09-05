@@ -1,7 +1,7 @@
 import { gql, useApolloClient } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { DateContext } from "./DateContext";
+import DateContext from "./DateContext";
 
 const QUERY = gql`
   query {

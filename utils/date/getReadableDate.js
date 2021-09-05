@@ -33,13 +33,13 @@ export default function getReadableDate(rawDate, now) {
 
   if (hoursFromNow < 12) {
     if (hoursFromNow === 1) {
-      const tensePhrasing = inPast ? "an hour ago" : "in an hour";
+      const tensePhrasing = inPast ? "about an hour ago" : "in about an hour";
       return `${tensePhrasing}, on ${standardFormatting}`;
     }
 
     const tensePhrasing = inPast
-      ? `${hoursFromNow} hours ago`
-      : `in ${hoursFromNow} hours`;
+      ? `about ${hoursFromNow} hours ago`
+      : `in about ${hoursFromNow} hours`;
     return `${tensePhrasing}, on ${standardFormatting}`;
   }
 
