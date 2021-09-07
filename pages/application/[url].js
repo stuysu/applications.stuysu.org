@@ -4,13 +4,12 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import AuthenticationRequired from "../../comps/admin/AuthenticationRequired";
 import BackButton from "../../comps/admin/BackButton";
 import DeadlineText from "../../comps/application/DeadlineText";
@@ -49,6 +48,24 @@ const RECORD_EMAIL_MUTATION = gql`
   }
 `;
 
+const selectNodeBody = node => {
+  const document = globalThis.document;
+
+  if (document.body.createTextRange) {
+    const range = document.body.createTextRange();
+    range.moveToElementText(node);
+    range.select();
+  } else if (window.getSelection) {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  } else {
+    console.warn("Could not select text in node: Unsupported browser.");
+  }
+};
+
 export default function ApplicationPage() {
   const router = useRouter();
   const { url } = router.query;
@@ -60,6 +77,7 @@ export default function ApplicationPage() {
     variables: { url },
     skip: !user.signedIn,
   });
+  const idContainerRef = useRef(null);
 
   useEffect(() => {
     if (data?.applicationByUrl?.type === "hybrid") {
@@ -238,59 +256,91 @@ export default function ApplicationPage() {
         </Container>
       )}
 
-      <div className={styles.idContainer}>
-        <div className={styles.center}>
-          <TextField
-            value={anonymityId || "loading..."}
-            variant={"outlined"}
-            label={"Your Anonymity ID"}
-            color={"secondary"}
-            InputProps={{
-              readOnly: true,
-              notched: true,
-            }}
-          />
-          &nbsp;
-          <Button
-            variant={"outlined"}
-            onClick={copyToClipboard}
-            color={"secondary"}
-          >
-            Copy
-          </Button>
-        </div>
-        <br />
-
-        <Typography
-          align={"center"}
-          variant={"subtitle2"}
-          color={"textSecondary"}
-          paragraph
+      <div className={styles.center}>
+        <fieldset
+          className={styles.idFieldset}
+          onClick={() => {
+            if (idContainerRef.current) {
+              selectNodeBody(idContainerRef.current);
+            }
+          }}
         >
-          <Link
-            href={"#"}
-            color={"textSecondary"}
-            onClick={() => {
-              showHowToCalculate();
-              return false;
-            }}
-          >
-            (How was this ID generated?)
-          </Link>
-        </Typography>
-        <Typography
-          variant={"body1"}
-          align={"center"}
-          color={"error"}
-          paragraph
-          gutterBottom
+          <legend color={"red"}>Your Anonymity ID:</legend>
+          <div className={styles.idContainer} ref={idContainerRef}>
+            {anonymityId.split("").map(char => {
+              const isInt = /[0-9]/.test(char);
+              return (
+                <Typography
+                  variant={"inherit"}
+                  color={isInt ? "error" : undefined}
+                  className={styles.idInput}
+                  component={"span"}
+                >
+                  {char}
+                </Typography>
+              );
+            })}
+          </div>
+        </fieldset>
+        &nbsp;
+        <Button
+          variant={"outlined"}
+          onClick={copyToClipboard}
+          color={"secondary"}
+          className={styles.copyButton}
         >
-          <b>
-            This ID is unique to this application, <br />
-            Do not use it for any other applications!
-          </b>
-        </Typography>
+          Copy
+        </Button>
       </div>
+      <br />
+      <Typography
+        align={"center"}
+        variant={"subtitle2"}
+        color={"textSecondary"}
+        paragraph
+      >
+        If your ID has{" "}
+        <Typography
+          align={"center"}
+          variant={"inherit"}
+          color={"error"}
+          component={"span"}
+          paragraph
+        >
+          <b>Red</b>
+        </Typography>{" "}
+        characters, they are numbers
+      </Typography>
+      <Typography
+        variant={"body1"}
+        align={"center"}
+        color={"error"}
+        paragraph
+        gutterBottom
+      >
+        <b>
+          This ID is unique to this application, <br />
+          Do not use it for any other applications!
+        </b>
+      </Typography>
+
+      <Typography
+        align={"center"}
+        variant={"subtitle2"}
+        color={"textSecondary"}
+        paragraph
+      >
+        <Link
+          href={"#"}
+          color={"secondary"}
+          onClick={() => {
+            showHowToCalculate();
+            return false;
+          }}
+        >
+          (How was this ID generated?)
+        </Link>
+      </Typography>
 
       {application.embed && (
         <Container maxWidth={"md"} className={styles.iframeContainer}>
