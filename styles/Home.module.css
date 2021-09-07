@@ -89,8 +89,7 @@
   font-size: 14px;
 }
 
-.miniText {
-  font-size: 10px;
+.longText {
   overflow-wrap: break-word;
   font-weight: bolder;
 }
@@ -98,7 +97,7 @@
 .idCodeBox {
   color: #27ae60;
   background: rgba(0,0,0,0.05);
-  box-shadow: rgba(0, 0, 0, 0.18) 3px 2px 2px 0px;
+  box-shadow: rgba(0, 0, 0, 0.18) 3px 2px 2px 0;
   border-radius: 5px;
   padding: 5px;
 }

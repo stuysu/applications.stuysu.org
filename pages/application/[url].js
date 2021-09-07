@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthenticationRequired from "../../comps/admin/AuthenticationRequired";
 import BackButton from "../../comps/admin/BackButton";
 import DeadlineText from "../../comps/application/DeadlineText";
+import IDGenerationExplanation from "../../comps/application/IDGenerationExplanation";
 import UserContext from "../../comps/auth/UserContext";
 import alertDialog from "../../comps/dialog/alertDialog";
 import CleanHTML from "../../comps/ui/CleanHTML";
@@ -80,109 +81,12 @@ export default function ApplicationPage() {
         </>
       ),
       body: (
-        <>
-          <Typography variant={"body1"} gutterBottom>
-            The ID of this application is:{" "}
-            <Typography
-              variant={"inherit"}
-              color={"primary"}
-              component={"span"}
-              className={styles.miniText}
-            >
-              {application.id}
-            </Typography>
-          </Typography>
-
-          <Typography variant={"body1"} gutterBottom>
-            Your Anonymity Secret is:{" "}
-            <Typography
-              variant={"inherit"}
-              color={"secondary"}
-              component={"span"}
-              className={styles.miniText}
-            >
-              {user.anonymitySecret}
-            </Typography>
-          </Typography>
-
-          <br />
-          <Typography variant={"subtitle1"} gutterBottom>
-            Steps:
-          </Typography>
-
-          <ol className={styles.steps}>
-            <li>
-              <Typography
-                variant={"subtitle1"}
-                paragraph
-                color={"textSecondary"}
-              >
-                Concatenate the application id and your anonymity secret.
-                <br />
-                (application id + anonymity secret)
-              </Typography>
-
-              <div>
-                <Typography
-                  variant={"subtitle2"}
-                  color={"primary"}
-                  className={styles.miniText}
-                  component={"span"}
-                >
-                  {application.id}
-                </Typography>
-                <Typography
-                  variant={"subtitle2"}
-                  color={"secondary"}
-                  className={styles.miniText}
-                  component={"span"}
-                >
-                  {user.anonymitySecret}
-                </Typography>
-              </div>
-            </li>
-
-            <li>
-              <Typography
-                variant={"subtitle1"}
-                paragraph
-                color={"textSecondary"}
-              >
-                Hash that value using the <b>SHA256</b> Algorithm
-              </Typography>
-              <Typography
-                variant={"subtitle2"}
-                className={styles.miniText}
-                style={{ color: "#6c5ce7" }}
-                paragraph
-              >
-                {hash}
-              </Typography>
-            </li>
-            <li>
-              <Typography
-                variant={"subtitle1"}
-                paragraph
-                color={"textSecondary"}
-              >
-                Truncate the hash to the <b>first 8 characters</b> for
-                simplicity.
-              </Typography>
-            </li>
-            <li>
-              <Typography
-                variant={"subtitle1"}
-                color={"textSecondary"}
-                gutterBottom
-              >
-                Your anonymity ID for this application is therefore:{" "}
-              </Typography>
-              <Typography variant={"subtitle1"}>
-                <b className={styles.idCodeBox}>{anonymityId}</b>
-              </Typography>
-            </li>
-          </ol>
-        </>
+        <IDGenerationExplanation
+          hash={hash}
+          applicationId={application.id}
+          anonymitySecret={user.anonymitySecret}
+          anonymityId={anonymityId}
+        />
       ),
     });
   };
