@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import BackButton from "../../comps/admin/BackButton";
 import UserContext from "../../comps/auth/UserContext";
+import CleanHTML from "../../comps/ui/CleanHTML";
 import styles from "./../../styles/FAQ.module.css";
 
 const QUERY = gql`
@@ -113,10 +114,7 @@ export default function FAQPreview() {
         <div className={styles.fixedSizeContainer}>
           <hr className={styles.hr} />
 
-          <div
-            className={"sanitized-html"}
-            dangerouslySetInnerHTML={{ __html: faq?.body }}
-          />
+          <CleanHTML html={faq?.body} />
         </div>
       </div>
 
