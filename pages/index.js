@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { HowToVote } from "@material-ui/icons";
 import PowerSettingsNew from "@material-ui/icons/PowerSettingsNew";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
-import { Pagination } from "@material-ui/lab";
+import { Pagination, Skeleton } from "@material-ui/lab";
 import Head from "next/head";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
@@ -175,8 +175,25 @@ export default function Home() {
               )}
 
               {loading && (
-                <div className={styles.center}>
-                  <CircularProgress />
+                <div>
+                  <Skeleton
+                    variant="rect"
+                    width={379}
+                    height={73}
+                    className={styles.listItemSkeleton}
+                  />
+                  <Skeleton
+                    variant="rect"
+                    width={379}
+                    height={73}
+                    className={styles.listItemSkeleton}
+                  />
+                  <Skeleton
+                    variant="rect"
+                    width={379}
+                    height={73}
+                    className={styles.listItemSkeleton}
+                  />
                 </div>
               )}
 

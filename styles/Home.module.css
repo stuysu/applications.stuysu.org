@@ -138,3 +138,7 @@
 .search {
   margin: 1rem;
 }
+
+.listItemSkeleton {
+  margin-bottom: 1rem;
+}
