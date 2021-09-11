@@ -87,5 +87,10 @@ export default gql`
     Returns the current date on the server
     """
     date: DateTime!
+
+    """
+    Takes a url and returns whether or not it can be embed on the site
+    """
+    isEmbeddable(url: URL!): Boolean!
   }
 `;

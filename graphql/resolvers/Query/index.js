@@ -8,6 +8,7 @@ import date from "./date";
 import faqById from "./faqById";
 import faqByUrl from "./faqByUrl";
 import faqs from "./faqs";
+import isEmbeddable from "./isEmbeddable";
 import userById from "./userById";
 import users from "./users";
 
@@ -24,6 +25,7 @@ const Query = {
   faqs,
   userById,
   users,
+  isEmbeddable,
 };
 
 export default Query;
