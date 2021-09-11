@@ -76,6 +76,15 @@ export default function LoginButton() {
               nonInteraction: true,
             });
           }
+        } else {
+          if (globalThis.window) {
+            ReactGA.event({
+              category: "Event",
+              action: "One Tap prompt was successfully displayed",
+              label: "Google",
+              nonInteraction: true,
+            });
+          }
         }
       });
     }
