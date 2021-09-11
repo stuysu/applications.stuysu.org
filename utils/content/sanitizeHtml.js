@@ -117,6 +117,6 @@ export default function sanitizeHtml(platform) {
       "player.vimeo.com",
       "youtu.be",
     ],
-    nestingLimit: 5,
+    nestingLimit: 10,
   });
 }
