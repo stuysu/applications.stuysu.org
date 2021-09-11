@@ -188,12 +188,6 @@ export default function Home() {
                     height={73}
                     className={styles.listItemSkeleton}
                   />
-                  <Skeleton
-                    variant="rect"
-                    width={379}
-                    height={73}
-                    className={styles.listItemSkeleton}
-                  />
                 </div>
               )}
 
