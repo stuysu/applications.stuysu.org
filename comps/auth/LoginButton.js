@@ -36,7 +36,7 @@ export default function LoginButton() {
         window.location.href = generateAuthorizationUrl({
           hint: profile.sub,
           prompt: "none",
-          state: router.asPath,
+          state: globalThis.window?.location.pathname,
         });
       } catch (e) {
         await alertDialog({ title: "Error Logging In", body: e.message });

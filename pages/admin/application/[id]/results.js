@@ -75,7 +75,9 @@ export default function AdminApplicationResults() {
       <Typography variant={"h4"} align={"center"}>
         Admin Panel
       </Typography>
+
       <AdminTabBar />
+
       <Typography
         variant={"h5"}
         align={"center"}
@@ -84,9 +86,11 @@ export default function AdminApplicationResults() {
       >
         {application.title}
       </Typography>
+
       <div className={styles.center}>
         <ApplicationTabBar />
       </div>
+
       <Typography variant={"body1"} align={"center"}>
         {application.active
           ? "This application is still active"
