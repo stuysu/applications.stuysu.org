@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
   const { noNavigation, noFooter } = router.query;
 
   useEffect(() => {
-    if (globalThis.window) {
+    if (globalThis.window && router.pathname !== "/form/[url]") {
       const url = new globalThis.URL(window.location.href);
       url.searchParams.delete("jwt");
 
