@@ -12,9 +12,10 @@ import SharedDialog from "../comps/dialog/SharedDialog";
 import Navigation from "../comps/nav/Navigation";
 import ThemeContext from "../comps/theme/ThemeContext";
 import Footer from "../comps/ui/Footer";
+import { GOOGLE_ANALYTICS_ID } from "../constants";
 import "../styles/globals.css";
 
-ReactGA.initialize("UA-119929576-4");
+ReactGA.initialize(GOOGLE_ANALYTICS_ID);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
