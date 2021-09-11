@@ -366,7 +366,7 @@ export default function ApplicationPage() {
             src={
               "/form/" +
               application.url +
-              "?noNavigation=true&jwt=" +
+              "?noNavigation=true&noFooter=true&&embed=true&jwt=" +
               globalThis.encodeURIComponent(localStorage.getItem("jwt"))
             }
             className={styles.iframe}

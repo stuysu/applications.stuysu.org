@@ -17,6 +17,8 @@ export async function getServerSideProps(context) {
   let user;
   let jwt = context.query.jwt || context.req.cookies?.jwt;
 
+  const isEmbed = context.query.embed === "true";
+
   if (jwt && jwt.startsWith("Bearer ")) {
     jwt = jwt.replace("Bearer ", "");
   }
@@ -54,6 +56,15 @@ export async function getServerSideProps(context) {
       throw new Error("missing redirect");
     }
 
+    if (isEmbed && !redirect.embeddable) {
+      return {
+        props: {
+          isEmbeddable: false,
+          link: application.link,
+        },
+      };
+    }
+
     return {
       redirect: {
         destination: redirect.final,
@@ -72,10 +83,14 @@ export async function getServerSideProps(context) {
 
 export default function FormRedirect({ link }) {
   return (
-    <Typography style={{ lineHeight: "50vh" }} align={"center"}>
-      <Link href={link} target={"_blank"} referrerPolicy={"no-referrer"}>
-        {link}
-      </Link>
-    </Typography>
+    <div style={{ marginTop: "40vh" }}>
+      <Typography align={"center"}>
+        This URL could not be embedded successfully. Please use the following
+        link to open the application. <br />
+        <Link href={link} target={"_blank"} referrerPolicy={"no-referrer"}>
+          {link}
+        </Link>
+      </Typography>
+    </div>
   );
 }

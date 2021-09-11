@@ -14,7 +14,7 @@ import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const { noNavigation } = router.query;
+  const { noNavigation, noFooter } = router.query;
 
   return (
     <StylesProvider injectFirst>
@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
                 <AdminWrapper>
                   {noNavigation !== "true" && <Navigation />}
                   <Component {...pageProps} />
-                  <Footer />
+                  {noFooter !== "true" && <Footer />}
                 </AdminWrapper>
               </DateProvider>
             </UserProvider>

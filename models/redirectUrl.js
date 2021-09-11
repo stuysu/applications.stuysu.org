@@ -8,6 +8,7 @@ const RedirectUrlSchema = new Schema({
   original: String,
   final: String,
   expiration: Date,
+  embeddable: Boolean,
 });
 
 const fiveMinutes = 1000 * 60 * 5;
