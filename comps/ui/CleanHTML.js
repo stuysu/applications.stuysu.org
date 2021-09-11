@@ -8,5 +8,10 @@ export default function CleanHTML({ html }) {
     setClean(sanitize(html));
   }, [html]);
 
-  return <div dangerouslySetInnerHTML={{ __html: clean }} />;
+  return (
+    <div
+      className={"html-content"}
+      dangerouslySetInnerHTML={{ __html: clean }}
+    />
+  );
 }

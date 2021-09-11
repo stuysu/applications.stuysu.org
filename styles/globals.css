@@ -46,3 +46,22 @@ code {
 .tox {
   border-radius: 5px;
 }
+
+.html-content {
+  font-family: 'Raleway', sans-serif;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.html-content a {
+  color: #096baa;
+}
+
+.html-content a:hover {
+  text-decoration: underline;
+}
+
+.html-content a:hover {
+
+}
