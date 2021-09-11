@@ -114,7 +114,7 @@ export default function FAQPreview() {
         <div className={styles.fixedSizeContainer}>
           <hr className={styles.hr} />
 
-          <CleanHTML html={faq?.body} />
+          <CleanHTML html={faq?.body} style={{ border: 0 }} />
         </div>
       </div>
 

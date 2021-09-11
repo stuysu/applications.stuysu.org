@@ -1,7 +1,7 @@
 import { sanitize } from "dompurify";
 import { useEffect, useState } from "react";
 
-export default function CleanHTML({ html }) {
+export default function CleanHTML({ html, style }) {
   const [clean, setClean] = useState("");
 
   useEffect(() => {

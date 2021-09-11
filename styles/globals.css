@@ -62,6 +62,7 @@ code {
   text-decoration: underline;
 }
 
-.html-content a:hover {
-
+.html-content img {
+  max-width: 80vw;
+  object-fit: contain;
 }
