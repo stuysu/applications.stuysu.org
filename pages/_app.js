@@ -23,7 +23,10 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (globalThis.window) {
-      ReactGA.pageview(window.location.pathname + window.location.search);
+      const url = new globalThis.URL(window.location.href);
+      url.searchParams.delete("jwt");
+
+      ReactGA.pageview(url.href);
     }
   }, [router]);
 
