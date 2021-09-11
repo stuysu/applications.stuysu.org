@@ -319,7 +319,15 @@ export default function ApplicationPage() {
         gutterBottom
       >
         <b>
-          This ID is unique to this application, <br />
+          This ID is unique to{" "}
+          <Typography
+            variant={"inherit"}
+            color={"secondary"}
+            component={"span"}
+          >
+            {application.title}
+          </Typography>
+          , <br />
           Do not use it for any other applications!
         </b>
       </Typography>
