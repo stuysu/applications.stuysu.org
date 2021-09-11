@@ -1,5 +1,7 @@
 // pick a date util library
+import { gql } from "@apollo/client";
 import MomentUtils from "@date-io/moment";
+import { CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
@@ -19,10 +21,13 @@ import {
 import { useFormik } from "formik";
 import isUrl from "is-url";
 import moment from "moment";
-import { useContext, useEffect } from "react";
+import { useSnackbar } from "notistack";
+import { useContext, useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
 import getReadableDuration from "../../utils/date/getReadableDuration";
+import client from "../apollo/client";
 import DateContext from "../date/DateContext";
+import alertDialog from "../dialog/alertDialog";
 import TinyEditor from "../shared/TinyEditor";
 import styles from "./ApplicationForm.module.css";
 
@@ -64,6 +69,12 @@ function getDefaultUrl(title) {
     .substr(0, 50);
 }
 
+const URL_EMBEDDABLE_QUERY = gql`
+  query ($url: URL!) {
+    isEmbeddable(url: $url)
+  }
+`;
+
 export default function ApplicationForm({
   initialValues,
   onSubmit,
@@ -101,6 +112,36 @@ export default function ApplicationForm({
     onSubmit,
     validate,
   });
+  const [isValidatingLink, setIsValidatingLink] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleEmbedClick = async () => {
+    if (values.embed) {
+      await setFieldValue("embed", false);
+      return;
+    }
+
+    setIsValidatingLink(true);
+    try {
+      const { data } = await client.query({
+        query: URL_EMBEDDABLE_QUERY,
+        variables: { url: values.link },
+      });
+
+      if (data.isEmbeddable) {
+        await setFieldValue("embed", true);
+        setIsValidatingLink(false);
+      } else {
+        await alertDialog({
+          title: "Cannot Embed URL",
+          body: "That url is not embeddable. Usually with Google forms, that means you need to open up the form to people outside your organization. If you would rather not do that, don't select the embed option.",
+        });
+      }
+    } catch (e) {
+      setIsValidatingLink(false);
+      enqueueSnackbar(e.message, { variant: "error" });
+    }
+  };
 
   const { getNow } = useContext(DateContext);
 
@@ -195,12 +236,18 @@ export default function ApplicationForm({
           <FormControlLabel
             disabled={disabled || isSubmitting || !values.link}
             control={
-              <Checkbox
-                checked={!!values.link && !!values.embed}
-                onChange={() => setFieldValue("embed", !values.embed)}
-                name={"embed"}
-                disabled={disabled || isSubmitting || !values.link}
-              />
+              isValidatingLink ? (
+                <CircularProgress size={20} style={{ margin: "1rem" }} />
+              ) : (
+                <Checkbox
+                  checked={!!values.link && !!values.embed}
+                  onChange={handleEmbedClick}
+                  name={"embed"}
+                  disabled={
+                    disabled || isSubmitting || !values.link || isValidatingLink
+                  }
+                />
+              )
             }
             label="Embed Form On Site"
           />
