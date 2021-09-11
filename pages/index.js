@@ -106,7 +106,7 @@ export default function Home() {
                 <List>
                   {data.currentApplications.results.map(
                     ({ id, title, url, color, deadline, type }) => (
-                      <Link href={"/application/" + url} passHref>
+                      <Link href={"/application/" + url} passHref key={id}>
                         <ListItem
                           key={id}
                           style={{

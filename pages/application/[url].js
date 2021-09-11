@@ -75,8 +75,9 @@ export default function ApplicationPage() {
   const [recordUserEmail] = useMutation(RECORD_EMAIL_MUTATION);
   const { data, loading } = useQuery(QUERY, {
     variables: { url },
-    skip: !user.signedIn,
+    skip: !user.signedIn || !url,
   });
+
   const idContainerRef = useRef(null);
 
   useEffect(() => {
@@ -253,7 +254,7 @@ export default function ApplicationPage() {
         >
           <legend color={"red"}>Your Anonymity ID:</legend>
           <div className={styles.idContainer} ref={idContainerRef}>
-            {anonymityId.split("").map(char => {
+            {anonymityId.split("").map((char, index) => {
               const isInt = /[0-9]/.test(char);
               return (
                 <Typography
@@ -261,6 +262,7 @@ export default function ApplicationPage() {
                   color={isInt ? "error" : undefined}
                   className={styles.idInput}
                   component={"span"}
+                  key={index}
                 >
                   {char}
                 </Typography>
