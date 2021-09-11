@@ -1,6 +1,7 @@
 import { UserInputError } from "apollo-server-micro";
 import isUrl from "is-url";
 import Application from "../../../models/application";
+import sanitizeHtml from "../../../utils/content/sanitizeHtml";
 
 export default async (
   _,
@@ -49,6 +50,10 @@ export default async (
     throw new UserInputError(
       "The embed field can only be set to true when an application link is provided"
     );
+  }
+
+  if (more) {
+    more = sanitizeHtml(more);
   }
 
   application.title = title;
