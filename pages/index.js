@@ -191,7 +191,7 @@ export default function Home() {
                 </div>
               )}
 
-              {!loading && !!data.currentApplications.numPages > 0 && (
+              {!loading && !!data.currentApplications.numPages > 1 && (
                 <div className={styles.center}>
                   <Pagination
                     page={page}
