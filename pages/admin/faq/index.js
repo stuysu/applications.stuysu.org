@@ -117,7 +117,11 @@ export default function FAQAdmin() {
                   <ListItemIcon>
                     <DescriptionOutlined />
                   </ListItemIcon>
-                  <ListItemText primary={title} secondary={url} />
+                  <ListItemText
+                    primary={title}
+                    primaryTypographyProps={{ style: { width: "70%" } }}
+                    secondary={url}
+                  />
                   <ListItemSecondaryAction>
                     <Link href={"/admin/faq/" + id}>
                       <Button
