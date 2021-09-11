@@ -1,11 +1,23 @@
 import Typography from "@material-ui/core/Typography";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import ReactGA from "react-ga";
 import LoginButton from "../auth/LoginButton";
 import UserContext from "../auth/UserContext";
 import styles from "./AuthenticationRequired.module.css";
 
 export default function AuthenticationRequired({ children }) {
   const user = useContext(UserContext);
+
+  useEffect(() => {
+    if (user.loaded && !user.signedIn && globalThis.window) {
+      ReactGA.event({
+        category: "Navigation",
+        action: "Unauthenticated user viewed page requiring authentication",
+        label: window.location.pathname,
+        nonInteraction: false,
+      });
+    }
+  }, [user]);
 
   if (!user.signedIn) {
     return (

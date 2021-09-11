@@ -1,7 +1,8 @@
 import { CircularProgress } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import ReactGA from "react-ga";
 import UserContext from "../auth/UserContext";
 import Navigation from "../nav/Navigation";
 import styles from "./AdminWrapper.module.css";
@@ -10,6 +11,22 @@ import AuthenticationRequired from "./AuthenticationRequired";
 export default function AdminWrapper({ children }) {
   const user = useContext(UserContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (
+      user.loaded &&
+      router.pathname.startsWith("/admin") &&
+      !user.adminPrivileges &&
+      globalThis.window
+    ) {
+      ReactGA.event({
+        category: "Navigation",
+        action: "Non admin user viewed admin page",
+        label: window.location.pathname,
+        nonInteraction: false,
+      });
+    }
+  }, [router, user]);
 
   if (router.pathname.startsWith("/admin")) {
     if (!user.loaded) {

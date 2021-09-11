@@ -2,9 +2,19 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import ReactGA from "react-ga";
 import { TINYMCE_API_KEY } from "../../constants";
 
 async function uploadPicture(picture) {
+  if (globalThis.window) {
+    ReactGA.event({
+      category: "Interaction",
+      action: "User Uploaded Image",
+      label: window.location.pathname,
+      nonInteraction: false,
+    });
+  }
+
   const jwt = localStorage.getItem("jwt");
 
   const formData = new FormData();

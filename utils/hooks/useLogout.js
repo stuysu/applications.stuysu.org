@@ -1,4 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
+import ReactGA from "react-ga";
 
 const MUTATION = gql`
   mutation {
@@ -10,6 +11,15 @@ export default function useLogout() {
   const [cookieLogout, { loading }] = useMutation(MUTATION);
 
   const logout = async () => {
+    if (globalThis.window) {
+      ReactGA.event({
+        category: "Session",
+        action: "User Logged Out",
+        label: globalThis.location?.pathname,
+        nonInteraction: false,
+      });
+    }
+
     // destroy localstorage session data
     globalThis.localStorage.clear();
 

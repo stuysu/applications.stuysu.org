@@ -10,6 +10,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect, useRef, useState } from "react";
+import ReactGA from "react-ga";
 import AuthenticationRequired from "../../comps/admin/AuthenticationRequired";
 import BackButton from "../../comps/admin/BackButton";
 import DeadlineText from "../../comps/application/DeadlineText";
@@ -49,6 +50,15 @@ const RECORD_EMAIL_MUTATION = gql`
 `;
 
 const selectNodeBody = node => {
+  if (globalThis.window) {
+    ReactGA.event({
+      category: "Interaction",
+      action: "ID Selection",
+      label: "User Clicked on their ID and selected the text",
+      nonInteraction: false,
+    });
+  }
+
   const document = globalThis.document;
 
   if (document.body.createTextRange) {
@@ -131,12 +141,30 @@ export default function ApplicationPage() {
         enqueueSnackbar("Anonymity ID copied to clipboard.", {
           variant: "success",
         });
+
+        if (globalThis.window) {
+          ReactGA.event({
+            category: "Interaction",
+            action: "Successfully Copied Anonymity ID",
+            label: application.title,
+            nonInteraction: false,
+          });
+        }
       },
-      function () {
+      function (e) {
         /* clipboard write failed */
         enqueueSnackbar("Unable to copy to clipboard. Please copy manually.", {
           variant: "error",
         });
+
+        if (globalThis.window) {
+          ReactGA.event({
+            category: "Interaction",
+            action: "Error Copying Anonymity ID",
+            label: application.title + " " + e.message,
+            nonInteraction: false,
+          });
+        }
       }
     );
   };
@@ -228,6 +256,16 @@ export default function ApplicationPage() {
               target={"_blank"}
               referrerPolicy={"no-referrer"}
               color={"secondary"}
+              onClick={() => {
+                if (globalThis.window) {
+                  ReactGA.event({
+                    category: "Interaction",
+                    action: "User Clicked Application Form Link",
+                    label: application.title,
+                    nonInteraction: false,
+                  });
+                }
+              }}
             >
               {application.link.length > 60
                 ? "https://applications.stuysu.org/form/" + application.url
@@ -322,7 +360,7 @@ export default function ApplicationPage() {
 
       <Typography
         align={"center"}
-        variant={"subtitle2"}
+        variant={"subtitle1"}
         color={"textSecondary"}
         paragraph
       >
@@ -330,6 +368,15 @@ export default function ApplicationPage() {
           href={"#"}
           color={"secondary"}
           onClick={() => {
+            if (globalThis.window) {
+              ReactGA.event({
+                category: "Interaction",
+                action: "Clicked How ID Was Generated Link",
+                label: application.title,
+                nonInteraction: false,
+              });
+            }
+
             showHowToCalculate();
             return false;
           }}
@@ -346,6 +393,16 @@ export default function ApplicationPage() {
             href={application.link}
             target={"_blank"}
             referrerPolicy={"no-referrer"}
+            onClick={() => {
+              if (globalThis.window) {
+                ReactGA.event({
+                  category: "Interaction",
+                  action: "User Clicked Open In New Tab Button",
+                  label: application.title,
+                  nonInteraction: false,
+                });
+              }
+            }}
           >
             Open In A New Tab
           </Button>

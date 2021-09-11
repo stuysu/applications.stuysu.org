@@ -1,5 +1,6 @@
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import ReactGA from "react-ga";
 import Application from "../../models/application";
 import RedirectUrl from "../../models/redirectUrl";
 import User from "../../models/user";
@@ -95,7 +96,21 @@ export default function FormRedirect({ link }) {
         This URL could not be embedded successfully. Please use the following
         link to open the application. <br />
         <br />
-        <Link href={link} target={"_blank"} referrerPolicy={"no-referrer"}>
+        <Link
+          href={link}
+          target={"_blank"}
+          referrerPolicy={"no-referrer"}
+          onClick={() => {
+            if (globalThis.window) {
+              ReactGA.event({
+                category: "Navigation",
+                action: "User Opened Form Link From Unsupported Embed Page",
+                label: link,
+                nonInteraction: false,
+              });
+            }
+          }}
+        >
           {link}
         </Link>
       </Typography>

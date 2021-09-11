@@ -5,6 +5,7 @@ import ArrowBackIosOutlined from "@material-ui/icons/ArrowBackIosOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import ReactGA from "react-ga";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
 import FAQForm from "../../../comps/faq/FAQForm";
 import styles from "../../../styles/Admin.module.css";
@@ -27,6 +28,15 @@ export default function CreateFAQ() {
   const router = useRouter();
 
   const onSubmit = async (values, { setSubmitting }) => {
+    if (globalThis.window) {
+      ReactGA.event({
+        category: "Interaction",
+        action: "Attempted FAQ Creation",
+        label: window.location.pathname,
+        nonInteraction: false,
+      });
+    }
+
     try {
       const { data } = await create({
         variables: values,
@@ -37,6 +47,15 @@ export default function CreateFAQ() {
     } catch (e) {
       enqueueSnackbar(e.message, { variant: "error" });
       setSubmitting(false);
+
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Interaction",
+          action: "Errored FAQ Creation",
+          label: window.location.pathname,
+          nonInteraction: false,
+        });
+      }
     }
   };
 

@@ -3,6 +3,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga";
 import styles from "../../styles/Home.module.css";
 import useLogout from "../../utils/hooks/useLogout";
 import UserContext, { defaultValue } from "./UserContext";
@@ -30,6 +31,15 @@ export default function UserProvider({ children }) {
 
   useEffect(() => {
     if (error) {
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Error",
+          action: "Failed to load session information",
+          label: new Date().toISOString(),
+          nonInteraction: true,
+        });
+      }
+
       alert(
         "There was an error loading session information. Try refreshing the page."
       );
@@ -68,6 +78,15 @@ export default function UserProvider({ children }) {
       !value.anonymitySecret &&
       router.pathname !== "/setup-anonymity-secret"
     ) {
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Session",
+          action: "User Anonymity Secret Not Set",
+          label: "Google",
+          nonInteraction: true,
+        });
+      }
+
       setTimeout(() => logout(), 3000);
     }
   }, [value, router]);

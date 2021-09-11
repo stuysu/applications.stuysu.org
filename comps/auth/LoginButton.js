@@ -2,6 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import { CircularProgress } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
+import ReactGA from "react-ga";
 import { GOOGLE_CLIENT_ID } from "../../constants";
 import generateAuthorizationUrl from "../../utils/auth/generateAuthorizationUrl";
 import useScript from "../../utils/hooks/useScript";
@@ -24,9 +25,19 @@ export default function LoginButton() {
 
   useEffect(() => {
     const callback = async ({ credential }) => {
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Session",
+          action: "User Successfully completed ID portion of login",
+          label: "Google",
+          nonInteraction: false,
+        });
+      }
+
       // Credential is a jwt with the user info.
       // We're going to use it to login first and that'll let us know if it's valid
       // If it's valid with can deconstruct it locally without needing to verify it again
+
       try {
         const { data } = await login({ variables: { idToken: credential } });
 
@@ -56,6 +67,15 @@ export default function LoginButton() {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
           // continue with another identity provider.
           console.log("One Tap isn't supported in this browser");
+
+          if (globalThis.window) {
+            ReactGA.event({
+              category: "Event",
+              action: "One Tap prompt was not displayed",
+              label: "Google",
+              nonInteraction: true,
+            });
+          }
         }
       });
     }

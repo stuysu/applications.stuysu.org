@@ -1,3 +1,4 @@
+import ReactGA from "react-ga";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -7,6 +8,16 @@ export default function Footer() {
         href="https://github.com/stuysu/applications.stuysu.org"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => {
+          if (globalThis.window) {
+            ReactGA.event({
+              category: "Navigation",
+              action: "Clicked Github Link",
+              label: "Github",
+              nonInteraction: false,
+            });
+          }
+        }}
       >
         View source on
         <img

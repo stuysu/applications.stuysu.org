@@ -7,6 +7,7 @@ import EditOutlined from "@material-ui/icons/EditOutlined";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga";
 import AdminTabBar from "../../../comps/admin/AdminTabBar";
 import BackButton from "../../../comps/admin/BackButton";
 import confirmDialog from "../../../comps/dialog/confirmDialog";
@@ -87,6 +88,15 @@ export default function AdminFAQ() {
   const onSave = async (values, { setSubmitting }) => {
     const { title, url, body } = values;
 
+    if (globalThis.window) {
+      ReactGA.event({
+        category: "Interaction",
+        action: "Attempted FAQ Edit Save",
+        label: window.location.pathname,
+        nonInteraction: false,
+      });
+    }
+
     try {
       await edit({
         variables: {
@@ -104,6 +114,15 @@ export default function AdminFAQ() {
     } catch (e) {
       enqueueSnackbar(e.message, { variant: "error" });
       setSubmitting(false);
+
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Interaction",
+          action: "FAQ Edit Save Error",
+          label: e.message,
+          nonInteraction: false,
+        });
+      }
     }
   };
 

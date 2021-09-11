@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/router";
 import qs from "querystring";
 import { useCallback, useContext, useEffect, useState } from "react";
+import ReactGA from "react-ga";
 import UserContext from "../comps/auth/UserContext";
 import confirmDialog from "../comps/dialog/confirmDialog";
 import styles from "../styles/Home.module.css";
@@ -38,6 +39,15 @@ export default function SetupAnonymitySecret() {
     }
 
     if (user.signedIn && userNeedsToAuthorize && !prompting) {
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Session",
+          action: "Prompted User For Google Drive",
+          label: "Google",
+          nonInteraction: true,
+        });
+      }
+
       setPrompting(true);
       confirmDialog({
         title: "One more step",
@@ -121,6 +131,15 @@ export default function SetupAnonymitySecret() {
     await edit({ variables: { fileId } });
     window.localStorage.setItem("anonymitySecret", anonymitySecret);
 
+    if (globalThis.window) {
+      ReactGA.event({
+        category: "Session",
+        action: "Successfully retrieved anonymity secret from drive",
+        label: "Google",
+        nonInteraction: true,
+      });
+    }
+
     return anonymitySecret;
   };
 
@@ -143,7 +162,17 @@ export default function SetupAnonymitySecret() {
           return res?.appProperties?.anonymitySecret;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      if (globalThis.window) {
+        ReactGA.event({
+          category: "Session",
+          action:
+            "Failed to retrieve existing anonymity secret from user's drive",
+          label: user.email,
+          nonInteraction: true,
+        });
+      }
+    }
 
     return null;
   }, [user]);
@@ -156,7 +185,7 @@ export default function SetupAnonymitySecret() {
             secret = await generateSecret();
           }
           window.localStorage.setItem("anonymitySecret", secret);
-          window.location.href = referrer || "/";
+          window.location.href = hash.state || referrer || "/";
         })
         .catch(er => {
           console.error(er);

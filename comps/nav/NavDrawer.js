@@ -10,6 +10,7 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
+import ReactGA from "react-ga";
 import useLogout from "../../utils/hooks/useLogout";
 import UserContext from "../auth/UserContext";
 import styles from "./NavDrawer.module.css";
@@ -82,13 +83,24 @@ export default function NavDrawer({ open, setOpen, pages }) {
               }
 
               return (
-                <Link href={href} key={label}>
-                  <a>
-                    <ListItem button selected={!!pathname.match(active)}>
-                      <ListItemIcon children={icon} />
-                      <ListItemText primary={label} />
-                    </ListItem>
-                  </a>
+                <Link href={href} key={label} passHref>
+                  <ListItem
+                    button
+                    selected={!!pathname.match(active)}
+                    onClick={() => {
+                      if (globalThis.window) {
+                        ReactGA.event({
+                          category: "Interaction",
+                          action: "User Clicked Nav Drawer Link: " + label,
+                          label: label,
+                          nonInteraction: false,
+                        });
+                      }
+                    }}
+                  >
+                    <ListItemIcon children={icon} />
+                    <ListItemText primary={label} />
+                  </ListItem>
                 </Link>
               );
             }

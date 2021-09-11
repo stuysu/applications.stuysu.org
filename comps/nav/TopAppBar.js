@@ -9,6 +9,7 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import ReactGA from "react-ga";
 import useLogout from "../../utils/hooks/useLogout";
 import UserContext from "../auth/UserContext";
 import styles from "./TopAppBar.module.css";
@@ -86,7 +87,18 @@ export default function TopAppBar({ setDrawerOpen, pages }) {
             className={styles.menuButton}
             color="inherit"
             aria-label="menu"
-            onClick={() => setDrawerOpen(open => !open)}
+            onClick={() => {
+              setDrawerOpen(open => !open);
+
+              if (globalThis.window) {
+                ReactGA.event({
+                  category: "Interaction",
+                  action: "User Opened Navdrawer",
+                  label: window.location.pathname,
+                  nonInteraction: false,
+                });
+              }
+            }}
           >
             <MenuIcon />
           </IconButton>

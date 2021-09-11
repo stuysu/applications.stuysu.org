@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import ArrowBackIosOutlined from "@material-ui/icons/ArrowBackIosOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ReactGA from "react-ga";
 
 export default function BackButton({ href, label }) {
   const router = useRouter();
@@ -20,6 +21,16 @@ export default function BackButton({ href, label }) {
           color={"primary"}
           startIcon={<ArrowBackIosOutlined />}
           children={label}
+          onClick={() => {
+            if (globalThis.window) {
+              ReactGA.event({
+                category: "Interaction",
+                action: "Clicked Back Button",
+                label: router.pathname,
+                nonInteraction: false,
+              });
+            }
+          }}
         />
       </Link>
     </Container>
