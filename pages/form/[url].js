@@ -83,10 +83,18 @@ export async function getServerSideProps(context) {
 
 export default function FormRedirect({ link }) {
   return (
-    <div style={{ marginTop: "40vh" }}>
+    <div
+      style={{
+        marginTop: "40vh",
+        width: "100vw",
+        padding: "2rem",
+        overflowWrap: "break-word",
+      }}
+    >
       <Typography align={"center"}>
         This URL could not be embedded successfully. Please use the following
         link to open the application. <br />
+        <br />
         <Link href={link} target={"_blank"} referrerPolicy={"no-referrer"}>
           {link}
         </Link>

@@ -158,97 +158,104 @@ export default function ApplicationPage() {
       </Head>
 
       <Tooltip title={application.id}>
-        <Typography variant={"h4"} align={"center"} gutterBottom>
+        <Typography
+          variant={"h4"}
+          align={"center"}
+          gutterBottom
+          style={{ padding: "0 1rem" }}
+        >
           {application.title}
         </Typography>
       </Tooltip>
       <hr className={styles.hr} style={{ background: application.color }} />
-      <Typography
-        variant={"body1"}
-        color={"textSecondary"}
-        align={"center"}
-        paragraph
-      >
-        Type:{" "}
-        <b style={{ color: "#27ae60" }}>
-          {application.type === "hybrid"
-            ? "Hybrid Anonymity"
-            : "Fully Anonymous"}{" "}
-        </b>
-        (
-        <Typography
-          variant={"body2"}
-          component={"span"}
-          color={"textSecondary"}
-          align={"center"}
-          paragraph
-        >
-          <Link
-            href={"/faq/what-are-anonymity-types"}
-            color={"textSecondary"}
-            target={"_blank"}
-            referrerPolicy={"no-referrer"}
-          >
-            What does this mean?
-          </Link>
-        </Typography>
-        )
-      </Typography>
-
-      <Typography
-        variant={"body1"}
-        color={"textSecondary"}
-        align={"center"}
-        paragraph
-      >
-        Status:{" "}
-        {application.active && !application.archived ? (
-          <Typography variant={"inherit"} style={{ color: "#27ae60" }}>
-            Open / Results Not Announced
-          </Typography>
-        ) : (
-          <Typography variant={"inherit"}>
-            {application.archived
-              ? "Completed / Archived"
-              : "Completed / Results Announced"}
-          </Typography>
-        )}
-      </Typography>
-
-      <Typography
-        variant={"body1"}
-        color={"textSecondary"}
-        align={"center"}
-        paragraph
-      >
-        Deadline:{" "}
-        <DeadlineText
-          showWarning
-          warningDiff={1000 * 60 * 60 * 6}
-          deadline={application.deadline}
-        />
-      </Typography>
-
-      {!!application.link && (
+      <Container maxWidth={"xs"}>
         <Typography
           variant={"body1"}
-          align={"center"}
           color={"textSecondary"}
+          align={"center"}
           paragraph
         >
-          Application Form:{" "}
-          <Link
-            href={application.link}
-            target={"_blank"}
-            referrerPolicy={"no-referrer"}
-            color={"secondary"}
+          Type:{" "}
+          <b style={{ color: "#27ae60" }}>
+            {application.type === "hybrid"
+              ? "Hybrid Anonymity"
+              : "Fully Anonymous"}{" "}
+          </b>
+          (
+          <Typography
+            variant={"body2"}
+            component={"span"}
+            color={"textSecondary"}
+            align={"center"}
+            paragraph
           >
-            {application.link.length > 60
-              ? "https://applications.stuysu.org/form/" + application.url
-              : application.link}
-          </Link>
+            <Link
+              href={"/faq/what-are-anonymity-types"}
+              color={"textSecondary"}
+              target={"_blank"}
+              referrerPolicy={"no-referrer"}
+            >
+              What does this mean?
+            </Link>
+          </Typography>
+          )
         </Typography>
-      )}
+
+        <Typography
+          variant={"body1"}
+          color={"textSecondary"}
+          align={"center"}
+          paragraph
+        >
+          Status:{" "}
+          {application.active && !application.archived ? (
+            <Typography variant={"inherit"} style={{ color: "#27ae60" }}>
+              Open / Results Not Announced
+            </Typography>
+          ) : (
+            <Typography variant={"inherit"}>
+              {application.archived
+                ? "Completed / Archived"
+                : "Completed / Results Announced"}
+            </Typography>
+          )}
+        </Typography>
+
+        <Typography
+          variant={"body1"}
+          color={"textSecondary"}
+          align={"center"}
+          paragraph
+        >
+          Deadline:{" "}
+          <DeadlineText
+            showWarning
+            warningDiff={1000 * 60 * 60 * 6}
+            deadline={application.deadline}
+          />
+        </Typography>
+
+        {!!application.link && (
+          <Typography
+            variant={"body1"}
+            align={"center"}
+            color={"textSecondary"}
+            paragraph
+          >
+            Application Form:{" "}
+            <Link
+              href={application.link}
+              target={"_blank"}
+              referrerPolicy={"no-referrer"}
+              color={"secondary"}
+            >
+              {application.link.length > 60
+                ? "https://applications.stuysu.org/form/" + application.url
+                : application.link}
+            </Link>
+          </Typography>
+        )}
+      </Container>
 
       {application.more && (
         <Container maxWidth={"md"} className={styles.html}>
