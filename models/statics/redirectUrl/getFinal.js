@@ -20,7 +20,7 @@ export default async function getFinal(original, skipCache = false) {
 
     const { request, headers } = await axios.get(original, { maxRedirects: 5 });
 
-    const embeddable = headers["x-frame-options"]?.toLowerCase() === "deny";
+    const embeddable = headers["x-frame-options"]?.toLowerCase() !== "deny";
 
     const final = request.res.responseUrl;
     const expiration = new Date(Date.now() + model.maxAge);

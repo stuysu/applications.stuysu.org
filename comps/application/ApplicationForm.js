@@ -130,7 +130,6 @@ export default function ApplicationForm({
 
       if (data.isEmbeddable) {
         await setFieldValue("embed", true);
-        setIsValidatingLink(false);
       } else {
         await alertDialog({
           title: "Cannot Embed URL",
@@ -138,8 +137,9 @@ export default function ApplicationForm({
         });
       }
     } catch (e) {
-      setIsValidatingLink(false);
       enqueueSnackbar(e.message, { variant: "error" });
+    } finally {
+      setIsValidatingLink(false);
     }
   };
 
