@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
@@ -9,9 +10,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { HowToVote } from "@material-ui/icons";
 import PowerSettingsNew from "@material-ui/icons/PowerSettingsNew";
+import SearchOutlined from "@material-ui/icons/SearchOutlined";
+import { Pagination } from "@material-ui/lab";
 import Head from "next/head";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoginButton from "../comps/auth/LoginButton";
 import UserContext from "../comps/auth/UserContext";
 import DateContext from "../comps/date/DateContext";
@@ -20,8 +23,8 @@ import getReadableDate from "../utils/date/getReadableDate";
 import useLogout from "../utils/hooks/useLogout";
 
 const QUERY = gql`
-  query ($page: PositiveInt!) {
-    currentApplications(page: $page) {
+  query ($page: PositiveInt!, $query: String!) {
+    currentApplications(query: $query, page: $page, resultsPerPage: 15) {
       page
       numPages
       total
@@ -43,13 +46,20 @@ export default function Home() {
   const { getNow } = useContext(DateContext);
   const now = getNow();
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
   const { logout, loading: loggingOut } = useLogout();
+
   const { data, loading } = useQuery(QUERY, {
     variables: {
       page,
+      query,
     },
     skip: !user.signedIn,
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [query]);
 
   return (
     <div className={styles.container}>
@@ -101,6 +111,14 @@ export default function Home() {
             <Typography variant={"h5"} gutterBottom>
               Current Applications:{" "}
             </Typography>
+
+            <TextField
+              variant={"outlined"}
+              InputProps={{ startAdornment: <SearchOutlined /> }}
+              onChange={e => setQuery(e.target.value)}
+              className={styles.search}
+              placeholder={"Search for Application"}
+            />
             <Container maxWidth={"sm"}>
               {!loading && !!data.currentApplications.total && (
                 <List>
@@ -142,6 +160,34 @@ export default function Home() {
                     )
                   )}
                 </List>
+              )}
+
+              {!loading && !data.currentApplications.total && (
+                <div>
+                  <Typography variant={"h6"} align={"center"} gutterBottom>
+                    {query ? "No results" : "No applications at this time"}
+                  </Typography>
+
+                  <div className={styles.center}>
+                    <img src={"/no-data.svg"} alt={"Empty box"} width={200} />
+                  </div>
+                </div>
+              )}
+
+              {loading && (
+                <div className={styles.center}>
+                  <CircularProgress />
+                </div>
+              )}
+
+              {!loading && !!data.currentApplications.numPages > 0 && (
+                <div className={styles.center}>
+                  <Pagination
+                    page={page}
+                    count={data.currentApplications.numPages}
+                    onChange={(e, p) => setPage(p)}
+                  />
+                </div>
               )}
             </Container>
           </>
