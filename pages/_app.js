@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
       const url = new globalThis.URL(window.location.href);
       url.searchParams.delete("jwt");
 
-      ReactGA.pageview(url.href);
+      ReactGA.pageview(url.pathname + url.search);
     }
   }, [router]);
 
