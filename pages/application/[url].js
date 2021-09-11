@@ -169,12 +169,7 @@ export default function ApplicationPage() {
       </Tooltip>
       <hr className={styles.hr} style={{ background: application.color }} />
       <Container maxWidth={"xs"}>
-        <Typography
-          variant={"body1"}
-          color={"textSecondary"}
-          align={"center"}
-          paragraph
-        >
+        <Typography variant={"body1"} color={"textSecondary"} paragraph>
           Type:{" "}
           <b style={{ color: "#27ae60" }}>
             {application.type === "hybrid"
@@ -186,7 +181,6 @@ export default function ApplicationPage() {
             variant={"body2"}
             component={"span"}
             color={"textSecondary"}
-            align={"center"}
             paragraph
           >
             <Link
@@ -201,12 +195,7 @@ export default function ApplicationPage() {
           )
         </Typography>
 
-        <Typography
-          variant={"body1"}
-          color={"textSecondary"}
-          align={"center"}
-          paragraph
-        >
+        <Typography variant={"body1"} color={"textSecondary"} paragraph>
           Status:{" "}
           {application.active && !application.archived ? (
             <Typography variant={"inherit"} style={{ color: "#27ae60" }}>
@@ -221,12 +210,7 @@ export default function ApplicationPage() {
           )}
         </Typography>
 
-        <Typography
-          variant={"body1"}
-          color={"textSecondary"}
-          align={"center"}
-          paragraph
-        >
+        <Typography variant={"body1"} color={"textSecondary"} paragraph>
           Deadline:{" "}
           <DeadlineText
             showWarning
@@ -236,12 +220,7 @@ export default function ApplicationPage() {
         </Typography>
 
         {!!application.link && (
-          <Typography
-            variant={"body1"}
-            align={"center"}
-            color={"textSecondary"}
-            paragraph
-          >
+          <Typography variant={"body1"} color={"textSecondary"} paragraph>
             Application Form:{" "}
             <Link
               href={application.link}
