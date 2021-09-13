@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import ArchiveRounded from "@material-ui/icons/ArchiveRounded";
+import EditOutlined from "@material-ui/icons/EditOutlined";
 import HowToVote from "@material-ui/icons/HowToVote";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import Link from "next/link";
