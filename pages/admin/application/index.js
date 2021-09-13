@@ -9,8 +9,9 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { ArchiveRounded, HowToVote, Visibility } from "@material-ui/icons";
 import AddOutlined from "@material-ui/icons/AddOutlined";
+import ArchiveRounded from "@material-ui/icons/ArchiveRounded";
+import HowToVote from "@material-ui/icons/HowToVote";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
@@ -146,10 +147,10 @@ export default function ApplicationAdmin() {
                     <Link href={"/admin/application/" + id} passHref>
                       <Button
                         color={"primary"}
-                        startIcon={<Visibility />}
+                        startIcon={<EditOutlined />}
                         variant={"outlined"}
                       >
-                        View
+                        Manage
                       </Button>
                     </Link>
                   </ListItemSecondaryAction>
