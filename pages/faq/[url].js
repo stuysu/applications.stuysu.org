@@ -50,6 +50,10 @@ export async function getStaticPaths() {
 export default function FAQPreview({ faq }) {
   const user = useContext(UserContext);
 
+  if (!faq) {
+    return null;
+  }
+
   const bodyWords = faq.plainTextBody.split(" ");
   const summaryWords = bodyWords.slice(0, 20);
 
