@@ -26,6 +26,7 @@ export async function getStaticProps(ctx) {
   return {
     props: {
       faq: {
+        id: faq.id.toString(),
         title,
         url,
         body,
