@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { StylesProvider } from "@material-ui/styles";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
@@ -32,6 +33,12 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <StylesProvider injectFirst>
+      <Head>
+        <meta
+          property="og:image"
+          content="https://applications.stuysu.org/su-logo.png"
+        />
+      </Head>
       <ThemeContext>
         <SnackbarProvider
           classes={{

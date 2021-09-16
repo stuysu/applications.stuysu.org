@@ -1,85 +1,67 @@
-import { gql, useQuery } from "@apollo/client";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import StyledLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import EditOutlined from "@material-ui/icons/EditOutlined";
+import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useContext } from "react";
 import BackButton from "../../comps/admin/BackButton";
 import UserContext from "../../comps/auth/UserContext";
 import CleanHTML from "../../comps/ui/CleanHTML";
+import FAQ from "../../models/faq";
 import styles from "./../../styles/FAQ.module.css";
 
-const QUERY = gql`
-  query ($url: NonEmptyString!) {
-    faqByUrl(url: $url) {
-      id
-      title
-      url
-      body
-      updatedAt
-    }
-  }
-`;
-
-export default function FAQPreview() {
-  const router = useRouter();
-  const { url } = router.query;
-  const { data, loading } = useQuery(QUERY, { variables: { url } });
-  const user = useContext(UserContext);
-
-  const faq = data?.faqByUrl;
-
-  if (loading) {
-    return (
-      <div className={styles.container}>
-        <BackButton label={"Back To All FAQs"} href={"/faq"} />
-
-        <Typography variant={"h4"} align={"center"} gutterBottom>
-          FAQs
-        </Typography>
-
-        <div className={styles.center}>
-          <CircularProgress />
-        </div>
-      </div>
-    );
-  }
+export async function getStaticProps(ctx) {
+  const { url } = ctx.params;
+  const faq = await FAQ.findOne({ url });
 
   if (!faq) {
-    return (
-      <div className={styles.container}>
-        <BackButton label={"Back To All FAQs"} href={"/faq"} />
+    return {
+      notFound: true,
+    };
+  }
 
-        <Typography variant={"h4"} align={"center"} gutterBottom>
-          FAQs
-        </Typography>
+  return {
+    props: {
+      faq,
+    },
+    revalidate: 30,
+  };
+}
 
-        <Typography
-          variant={"h5"}
-          align={"center"}
-          color={"primary"}
-          gutterBottom
-          className={styles.title}
-        >
-          There's no FAQ with that url
-        </Typography>
+export async function getStaticPaths() {
+  const faqs = await FAQ.find({});
 
-        <div className={styles.center}>
-          <img
-            src={"/no-data.svg"}
-            alt={"Someone holding an empty box"}
-            width={200}
-          />
-        </div>
-      </div>
-    );
+  const paths = faqs.map(({ url }) => ({ params: { url } }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
+
+export default function FAQPreview({ faq }) {
+  const user = useContext(UserContext);
+
+  const bodyWords = faq.plainTextBody.split(" ");
+  const summaryWords = bodyWords.slice(0, 20);
+
+  let description = summaryWords.join(" ");
+
+  if (summaryWords.length < bodyWords.length) {
+    description += "...";
   }
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>{faq.title} | StuySU Applications</title>
+        <meta
+          property="og:title"
+          content={faq.title + " | StuySU Applications"}
+        />
+        <meta property="og:description" content={description} />
+      </Head>
       <BackButton label={"Back To All FAQs"} href={"/faq"} />
 
       <Typography variant={"h4"} align={"center"} gutterBottom>

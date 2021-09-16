@@ -1,4 +1,5 @@
 import { UserInputError } from "apollo-server-micro";
+import { parse } from "node-html-parser";
 import FAQ from "../../../models/faq";
 import sanitizeHtml from "../../../utils/content/sanitizeHtml";
 
@@ -30,6 +31,8 @@ export default async (_, { title, url, body }, { adminRequired }) => {
     throw new UserInputError("The body field cannot be empty");
   }
 
+  const plainTextBody = parse(body).innerText;
+
   const updatedAt = new Date();
   const createdAt = new Date();
 
@@ -37,6 +40,7 @@ export default async (_, { title, url, body }, { adminRequired }) => {
     title,
     url,
     body,
+    plainTextBody,
     updatedAt,
     createdAt,
   });

@@ -65,7 +65,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>StuySU Applications</title>
+        <title>Home | StuySU Applications</title>
+        <meta property="og:title" content="Home | StuySU Applications" />
+        <meta
+          property="og:description"
+          content="This site distributes Anonymous IDs used when applying for positions on the StuySU"
+        />
       </Head>
 
       <main className={styles.main}>

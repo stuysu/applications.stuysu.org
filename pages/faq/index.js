@@ -10,7 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DescriptionOutlined from "@material-ui/icons/DescriptionOutlined";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
-import { Pagination } from "@material-ui/lab";
+import Pagination from "@material-ui/lab/Pagination";
+import Head from "next/head";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import styles from "./../../styles/FAQ.module.css";
@@ -38,6 +39,15 @@ export default function FAQsHome() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>FAQs | StuySU Applications</title>
+        <meta property="og:title" content="FAQs | StuySU Applications" />
+        <meta
+          property="og:description"
+          content="See frequently asked questions about the StuySU Applications site."
+        />
+      </Head>
+
       <Typography variant={"h4"} align={"center"} gutterBottom>
         FAQs
       </Typography>

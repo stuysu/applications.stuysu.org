@@ -8,6 +8,7 @@ const FAQSchema = new Schema({
   title: String,
   url: { type: String, required: true, maxlength: 50 },
   body: String,
+  plainTextBody: String,
   createdAt: Date,
   updatedAt: Date,
 });
