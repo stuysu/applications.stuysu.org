@@ -50,10 +50,12 @@ code {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 1rem;
+  word-wrap: break-word;
 }
 
 .html-content a {
   color: #096baa;
+  word-wrap: break-word;
 }
 
 .html-content a:hover {
