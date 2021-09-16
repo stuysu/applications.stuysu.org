@@ -21,9 +21,16 @@ export async function getStaticProps(ctx) {
     };
   }
 
+  const { title, body, plainTextBody } = faq;
+
   return {
     props: {
-      faq,
+      faq: {
+        title,
+        url,
+        body,
+        plainTextBody: plainTextBody || "FAQ: " + title,
+      },
     },
     revalidate: 30,
   };
