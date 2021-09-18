@@ -45,6 +45,14 @@ export default gql`
       archived: Boolean!
     ): Application!
 
+    editResultsByApplicationId(
+      id: ObjectID!
+      acceptedIds: [AnonymityID!]!
+      acceptanceMessage: String!
+      rejectedIds: [AnonymityID!]!
+      rejectionMessage: String!
+    ): ApplicationResult!
+
     recordApplicantEmailByApplicationId(id: ObjectID!): Void
 
     deleteApplication(id: ObjectID!): Void

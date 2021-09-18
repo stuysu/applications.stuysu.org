@@ -19,9 +19,6 @@ const ApplicationSchema = new Schema({
   color: String,
   more: String,
 
-  // If hybrid this will contain an array of email addresses
-  applicants: [String],
-
   deadline: Date,
 
   createdAt: Date,
@@ -31,6 +28,29 @@ const ApplicationSchema = new Schema({
   archived: Boolean,
 
   applicantEmails: [String],
+
+  results: {
+    acceptedIds: [
+      {
+        type: String,
+        validate: /^[a-f0-9]{8}$/i,
+      },
+    ],
+    rejectedIds: [
+      {
+        type: String,
+        validate: /^[a-f0-9]{8}$/i,
+      },
+    ],
+    acceptanceMessage: {
+      type: String,
+      default: "",
+    },
+    rejectionMessage: {
+      type: String,
+      default: "",
+    },
+  },
 });
 
 ApplicationSchema.statics.idLoader = findOneLoaderFactory("Application");

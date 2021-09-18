@@ -66,3 +66,15 @@
 .tiny {
   padding: 1rem;
 }
+
+.containedButton {
+  margin: 1rem 0;
+}
+
+.idTitle {
+  margin: 1rem 0;
+}
+
+.tinyTitle {
+  margin-top: 1rem ;
+}

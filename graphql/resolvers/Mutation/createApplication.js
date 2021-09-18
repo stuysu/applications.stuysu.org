@@ -48,7 +48,6 @@ export default async (
     more,
 
     embed: link ? embed : false,
-    applicants: type === "hybrid" ? [] : null,
 
     createdAt: new Date(),
     updatedAt: new Date(),

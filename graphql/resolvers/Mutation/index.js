@@ -5,6 +5,7 @@ import deleteFAQ from "./deleteFAQ";
 import editApplication from "./editApplication";
 import editFAQ from "./editFAQ";
 import editGoogleDriveAnonymityFileId from "./editGoogleDriveAnonymityFileId";
+import editResultsByApplicationId from "./editResultsByApplicationId";
 import editUser from "./editUser";
 import login from "./login";
 import logout from "./logout";
@@ -18,6 +19,7 @@ export default {
   editApplication,
   deleteApplication,
   editGoogleDriveAnonymityFileId,
+  editResultsByApplicationId,
   login,
   logout,
   editUser,
