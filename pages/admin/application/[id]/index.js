@@ -11,8 +11,8 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import AdminTabBar from "../../../../comps/admin/AdminTabBar";
 import BackButton from "../../../../comps/admin/BackButton";
+import AdminApplicationTabBar from "../../../../comps/application/AdminApplicationTabBar";
 import ApplicationForm from "../../../../comps/application/ApplicationForm";
-import ApplicationTabBar from "../../../../comps/application/ApplicationTabBar";
 import confirmDialog from "../../../../comps/dialog/confirmDialog";
 import styles from "../../../../styles/Admin.module.css";
 
@@ -243,7 +243,7 @@ export default function CreateApplication() {
       </Typography>
 
       <div className={styles.center}>
-        <ApplicationTabBar />
+        <AdminApplicationTabBar />
       </div>
 
       {!editing && (

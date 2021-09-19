@@ -9,7 +9,6 @@ import faqById from "./faqById";
 import faqByUrl from "./faqByUrl";
 import faqs from "./faqs";
 import isEmbeddable from "./isEmbeddable";
-import resultsByApplicationId from "./resultsByApplicationId";
 import userById from "./userById";
 import users from "./users";
 
@@ -27,7 +26,6 @@ const Query = {
   userById,
   users,
   isEmbeddable,
-  resultsByApplicationId,
 };
 
 export default Query;

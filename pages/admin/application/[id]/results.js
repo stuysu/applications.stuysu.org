@@ -10,7 +10,7 @@ import { useState } from "react";
 import AdminTabBar from "../../../../comps/admin/AdminTabBar";
 import BackButton from "../../../../comps/admin/BackButton";
 import AdminApplicationResultsForm from "../../../../comps/application/AdminApplicationResultsForm";
-import ApplicationTabBar from "../../../../comps/application/ApplicationTabBar";
+import AdminApplicationTabBar from "../../../../comps/application/AdminApplicationTabBar";
 import { ObjectIdRegex } from "../../../../constants";
 import styles from "./../../../../styles/Admin.module.css";
 
@@ -30,12 +30,13 @@ const QUERY = gql`
       archived
       updatedAt
       createdAt
-    }
-    resultsByApplicationId(id: $id) {
-      acceptedIds
-      acceptanceMessage
-      rejectedIds
-      rejectionMessage
+
+      results {
+        acceptedIds
+        acceptanceMessage
+        rejectedIds
+        rejectionMessage
+      }
     }
   }
 `;
@@ -151,7 +152,7 @@ export default function AdminApplicationResults() {
       </Typography>
 
       <div className={styles.center}>
-        <ApplicationTabBar />
+        <AdminApplicationTabBar />
       </div>
 
       <Container maxWidth={"sm"}>
@@ -172,7 +173,7 @@ export default function AdminApplicationResults() {
         <AdminApplicationResultsForm
           submitLabel={"Save"}
           showCancelButton
-          initialValues={data.resultsByApplicationId}
+          initialValues={application.results}
           onSubmit={handleSubmit}
           disabled={!editing || isEditing}
           onCancel={({ resetForm }) => {

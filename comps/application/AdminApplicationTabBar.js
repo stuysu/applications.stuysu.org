@@ -15,9 +15,14 @@ const pages = [
     active: ["/admin/application/[id]/results"],
     href: "/admin/application/[id]/results",
   },
+  {
+    title: "Applicants",
+    active: ["/admin/applications/[id]/applicants"],
+    href: "/admin/applications/[id]/applicants",
+  },
 ];
 
-export default function ApplicationTabBar() {
+export default function AdminApplicationTabBar() {
   const router = useRouter();
   const { id } = router.query;
   const currentTab = pages.findIndex(page =>

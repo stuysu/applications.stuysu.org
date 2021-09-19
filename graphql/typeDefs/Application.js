@@ -16,5 +16,7 @@ export default gql`
     deadline: DateTime!
     createdAt: DateTime!
     updatedAt: DateTime!
+
+    results: ApplicationResult!
   }
 `;
