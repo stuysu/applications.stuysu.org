@@ -1,10 +1,11 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { Tooltip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
+import capitalize from "@material-ui/core/utils/capitalize";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -39,6 +40,12 @@ const QUERY = gql`
       deadline
       createdAt
       updatedAt
+
+      authenticatedApplicant {
+        id
+        status
+        message
+      }
     }
   }
 `;
@@ -46,6 +53,14 @@ const QUERY = gql`
 const RECORD_EMAIL_MUTATION = gql`
   mutation ($id: ObjectID!) {
     recordApplicantEmailByApplicationId(id: $id)
+  }
+`;
+
+const RECORD_ID_MUTATION = gql`
+  mutation ($id: ObjectID!, $anonymityId: AnonymityID!) {
+    recordAnonymityIdByApplicationId(anonymityId: $anonymityId, id: $id) {
+      id
+    }
   }
 `;
 
@@ -83,10 +98,12 @@ export default function ApplicationPage() {
   const [anonymityId, setAnonymityId] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [recordUserEmail] = useMutation(RECORD_EMAIL_MUTATION);
-  const { data, loading } = useQuery(QUERY, {
+  const { data, loading, refetch } = useQuery(QUERY, {
     variables: { url },
     skip: !user.signedIn || !url,
   });
+
+  const [recordId, { loading: recordingId }] = useMutation(RECORD_ID_MUTATION);
 
   const idContainerRef = useRef(null);
 
@@ -97,6 +114,18 @@ export default function ApplicationPage() {
   }, [data]);
 
   const application = data?.applicationByUrl;
+
+  const handleIdRecord = async () => {
+    try {
+      await recordId({
+        variables: { id: application.id, anonymityId: anonymityId },
+      });
+
+      await refetch();
+    } catch (e) {
+      enqueueSnackbar(e.message, { variant: "error" });
+    }
+  };
 
   const showHowToCalculate = async () => {
     const hash = await clientSHA256(application.id + user.anonymitySecret);
@@ -179,6 +208,8 @@ export default function ApplicationPage() {
     );
   }
 
+  const applicant = application.authenticatedApplicant;
+
   return (
     <div className={styles.page}>
       <BackButton href={"/"} label={"Back To Home"} />
@@ -203,8 +234,8 @@ export default function ApplicationPage() {
           <b style={{ color: "#27ae60" }}>
             {application.type === "hybrid"
               ? "Hybrid Anonymity"
-              : "Fully Anonymous"}{" "}
-          </b>
+              : "Fully Anonymous"}
+          </b>{" "}
           (
           <Typography
             variant={"body2"}
@@ -274,6 +305,70 @@ export default function ApplicationPage() {
           </Typography>
         )}
       </Container>
+
+      {!application.active && (
+        <Container maxWidth={"md"}>
+          <div
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderRadius: 5,
+              padding: "1rem",
+            }}
+          >
+            <Typography
+              variant={"h5"}
+              align={"center"}
+              color={"primary"}
+              paragraph
+            >
+              Results:
+            </Typography>
+
+            {!!applicant && (
+              <>
+                <Typography variant={"body1"} align={"center"}>
+                  Status:{" "}
+                  <Typography
+                    variant={"inherit"}
+                    component={"span"}
+                    style={{
+                      color:
+                        applicant.status === "accepted"
+                          ? "rgb(39, 174, 96)"
+                          : "textSecondary",
+                    }}
+                  >
+                    {capitalize(application.authenticatedApplicant.status)}
+                  </Typography>
+                </Typography>
+                <CleanHTML html={applicant.message} style={{ border: 0 }} />
+              </>
+            )}
+
+            {!applicant && (
+              <>
+                <Typography variant={"body1"} align={"center"} paragraph>
+                  In order to view your results you must share your Anonymity ID
+                  for this application. <br />
+                  It will be sent to and stored on the server alongside your
+                  identity to be used by members of the SU to reach out to you.
+                </Typography>
+
+                <div className={styles.center}>
+                  <Button
+                    variant={"contained"}
+                    color={"primary"}
+                    disabled={recordingId}
+                    onClick={handleIdRecord}
+                  >
+                    View My Results
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </Container>
+      )}
 
       {application.more && (
         <Container maxWidth={"md"} className={styles.html}>
@@ -385,7 +480,7 @@ export default function ApplicationPage() {
         </Link>
       </Typography>
 
-      {application.embed && (
+      {application.active && application.embed && (
         <Container maxWidth={"md"} className={styles.iframeContainer}>
           <Button
             variant={"outlined"}

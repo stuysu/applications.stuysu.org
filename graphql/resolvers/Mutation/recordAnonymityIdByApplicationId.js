@@ -30,9 +30,11 @@ export default async (
     { _id: id },
     {
       $push: {
-        userId: user.id,
-        anonymityId,
-        createdAt: new Date(),
+        applicants: {
+          userId: user.id,
+          anonymityId,
+          createdAt: new Date(),
+        },
       },
     }
   );
@@ -40,5 +42,7 @@ export default async (
   // We need to fetch it again since we updated it async
   application = await Application.findById(application.id);
 
-  return application.applicants.find(a => a.userId === user.id);
+  return application.applicants.find(
+    a => a.userId.toString() === user.id.toString()
+  );
 };

@@ -55,5 +55,6 @@ export default async (
     active: true,
     archived: false,
     applicantEmails: [],
+    applicants: [],
   });
 };

@@ -30,7 +30,7 @@ const ApplicationSchema = new Schema({
   applicants: [
     {
       userId: Schema.Types.ObjectId,
-      anonymityId: Schema.Types.ObjectId,
+      anonymityId: String,
       createdAt: Date,
     },
   ],

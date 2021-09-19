@@ -17,8 +17,8 @@ export default async (
   acceptedIds = Array.from(new Set(acceptedIds));
   rejectedIds = Array.from(new Set(rejectedIds));
 
-  acceptedIds.forEach(id => (application.results.map[id] = "accepted"));
-  rejectedIds.forEach(id => (application.results.map[id] = "rejected"));
+  acceptedIds.forEach(id => application.results.map.set(id, "accepted"));
+  rejectedIds.forEach(id => application.results.map.set(id, "rejected"));
 
   application.results.acceptedIds = acceptedIds;
   application.results.acceptanceMessage = acceptanceMessage;
