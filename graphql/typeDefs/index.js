@@ -1,6 +1,7 @@
 import { typeDefs as graphqlScalarDefs } from "graphql-scalars";
 import AnonymityID from "./AnonymityID";
 import AnonymityType from "./AnonymityType";
+import Applicant from "./Applicant";
 import Application from "./Application";
 import ApplicationResult from "./ApplicationResult";
 import FAQ from "./FAQ";
@@ -16,6 +17,7 @@ const typeDefs = [
   AnonymityID,
   AnonymityType,
   Application,
+  Applicant,
   ApplicationResult,
   FAQ,
   Mutation,

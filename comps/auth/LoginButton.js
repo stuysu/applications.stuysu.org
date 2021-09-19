@@ -1,5 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
-import { CircularProgress } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
 import ReactGA from "react-ga";

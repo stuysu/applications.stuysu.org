@@ -17,12 +17,14 @@ export default async (
   acceptedIds = Array.from(new Set(acceptedIds));
   rejectedIds = Array.from(new Set(rejectedIds));
 
-  application.results = {
-    acceptedIds,
-    acceptanceMessage,
-    rejectedIds,
-    rejectionMessage,
-  };
+  acceptedIds.forEach(id => (application.results.map[id] = "accepted"));
+  rejectedIds.forEach(id => (application.results.map[id] = "rejected"));
+
+  application.results.acceptedIds = acceptedIds;
+  application.results.acceptanceMessage = acceptanceMessage;
+
+  application.results.rejectedIds = rejectedIds;
+  application.results.rejectionMessage = rejectionMessage;
 
   await application.save();
 

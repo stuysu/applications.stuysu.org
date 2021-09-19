@@ -18,7 +18,7 @@ const pages = [
   {
     title: "Applicants",
     active: ["/admin/applications/[id]/applicants"],
-    href: "/admin/applications/[id]/applicants",
+    href: "/admin/application/[id]/applicants",
   },
 ];
 

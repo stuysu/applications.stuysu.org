@@ -53,6 +53,16 @@ export default gql`
       rejectionMessage: String!
     ): ApplicationResult!
 
+    """
+    Authentication is required and this mutation can only be run once
+    This will record the anonymity ID of the current user in the database for an application
+    Can only be called when the application is closed
+    """
+    recordAnonymityIdByApplicationId(
+      id: ObjectID!
+      anonymityId: AnonymityID!
+    ): Applicant!
+
     recordApplicantEmailByApplicationId(id: ObjectID!): Void
 
     deleteApplication(id: ObjectID!): Void

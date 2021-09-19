@@ -9,6 +9,7 @@ import editResultsByApplicationId from "./editResultsByApplicationId";
 import editUser from "./editUser";
 import login from "./login";
 import logout from "./logout";
+import recordAnonymityIdByApplicationId from "./recordAnonymityIdByApplicationId";
 import recordApplicantEmailByApplicationId from "./recordApplicantEmailByApplicationId";
 
 export default {
@@ -24,4 +25,5 @@ export default {
   logout,
   editUser,
   recordApplicantEmailByApplicationId,
+  recordAnonymityIdByApplicationId,
 };

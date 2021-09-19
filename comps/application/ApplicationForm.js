@@ -1,9 +1,9 @@
 // pick a date util library
 import { gql } from "@apollo/client";
 import MomentUtils from "@date-io/moment";
-import { CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";

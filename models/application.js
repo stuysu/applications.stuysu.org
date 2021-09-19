@@ -27,6 +27,14 @@ const ApplicationSchema = new Schema({
   active: Boolean,
   archived: Boolean,
 
+  applicants: [
+    {
+      userId: Schema.Types.ObjectId,
+      anonymityId: Schema.Types.ObjectId,
+      createdAt: Date,
+    },
+  ],
+
   applicantEmails: [String],
 
   results: {
@@ -49,6 +57,13 @@ const ApplicationSchema = new Schema({
     rejectionMessage: {
       type: String,
       default: "",
+    },
+
+    // This exists to speed up accepted/rejected lookups when requesting in bulk
+    // { [anonymityId]: "accepted" | "rejected" }
+    map: {
+      type: Map,
+      default: {},
     },
   },
 });
