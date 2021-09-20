@@ -65,6 +65,8 @@ export default gql`
 
     recordApplicantEmailByApplicationId(id: ObjectID!): Void
 
+    releaseResultsByApplicationId(id: ObjectID!): Application!
+
     deleteApplication(id: ObjectID!): Void
 
     editGoogleDriveAnonymityFileId(fileId: NonEmptyString!): Void

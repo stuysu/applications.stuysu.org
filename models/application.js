@@ -50,10 +50,12 @@ const ApplicationSchema = new Schema({
         validate: /^[a-f0-9]{8}$/i,
       },
     ],
+
     acceptanceMessage: {
       type: String,
       default: "",
     },
+
     rejectionMessage: {
       type: String,
       default: "",

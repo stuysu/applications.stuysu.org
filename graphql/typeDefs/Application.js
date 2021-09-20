@@ -23,7 +23,7 @@ export default gql`
     results: ApplicationResult!
 
     applicantEmails: [String!]
-    applicants: [Applicant!]!
+    applicants: [Applicant!]
 
     """
     Returns the applicant value for the current authenticated user if they've reported their anonymity ID

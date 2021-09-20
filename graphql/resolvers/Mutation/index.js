@@ -11,6 +11,7 @@ import login from "./login";
 import logout from "./logout";
 import recordAnonymityIdByApplicationId from "./recordAnonymityIdByApplicationId";
 import recordApplicantEmailByApplicationId from "./recordApplicantEmailByApplicationId";
+import releaseResultsByApplicationId from "./releaseResultsByApplicationId";
 
 export default {
   createFAQ,
@@ -26,4 +27,5 @@ export default {
   editUser,
   recordApplicantEmailByApplicationId,
   recordAnonymityIdByApplicationId,
+  releaseResultsByApplicationId,
 };
