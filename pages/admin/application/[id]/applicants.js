@@ -85,6 +85,25 @@ export default function ApplicationApplicants() {
               a.anonymityId.toLowerCase().includes(word)
           )
         );
+        apps.sort((a, b) => {
+          if (a.status === "accepted" && b.status !== "accepted") {
+            return -1;
+          }
+
+          if (b.status === "accepted" && a.status !== "accepted") {
+            return 1;
+          }
+
+          if (a.status === "rejected" && b.status !== "rejected") {
+            return -1;
+          }
+
+          if (b.status === "rejected" && a.status !== "rejected") {
+            return 1;
+          }
+
+          return 0;
+        });
       }
 
       setApplicants(apps);
@@ -272,6 +291,7 @@ export default function ApplicationApplicants() {
           <div className={styles.center}>
             <Pagination
               page={page}
+              onChange={(_, p) => setPage(p)}
               count={Math.ceil(applicants.length / resultsPerPage)}
               className={styles.pagination}
             />
