@@ -70,9 +70,11 @@ export default function ApplicationApplicants() {
   const [resultsPerPage] = useState(15);
 
   useEffect(() => {
-    let apps = [...data?.applicationById?.applicants];
+    let apps = data?.applicationById?.applicants;
 
     if (apps) {
+      apps = [...apps];
+
       if (search) {
         const searchWords = Array.from(
           new Set(search.toLowerCase().split(/\s+/))
@@ -205,17 +207,32 @@ export default function ApplicationApplicants() {
         <Container maxWidth={"sm"}>
           {application.type === "hybrid" && (
             <div style={{ margin: "1rem 0" }}>
-              <TextField
-                label={"Email Addresses of All Applicants"}
+              <Typography
+                variant={"body1"}
+                color={"textSecondary"}
+                gutterBottom
+              >
+                Email Addresses of All Applicants
+              </Typography>
+
+              <textarea
                 value={application.applicantEmails.join(delimiter)}
-                variant={"outlined"}
-                multiline
-                fullWidth
-                InputProps={{
-                  readOnly: true,
+                readOnly
+                style={{
+                  width: "100%",
+                  borderRadius: "5px",
+                  height: 200,
                 }}
-                style={{ margin: "1.5rem 0" }}
               />
+              <Typography
+                variant={"subtitle2"}
+                color={"textSecondary"}
+                gutterBottom
+              >
+                {application.applicantEmails.length} Email Addresses
+              </Typography>
+              <br />
+
               <div>
                 <TextField
                   label={"Delimiter"}
@@ -287,7 +304,19 @@ export default function ApplicationApplicants() {
                         <TableCell align="right">
                           {applicant.anonymityId}
                         </TableCell>
-                        <TableCell align="right">{applicant.status}</TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color:
+                              applicant.status === "accepted"
+                                ? "green"
+                                : applicant.status === "rejected"
+                                ? "red"
+                                : "grey",
+                          }}
+                        >
+                          {applicant.status}
+                        </TableCell>
                       </TableRow>
                     ))}
               </TableBody>
