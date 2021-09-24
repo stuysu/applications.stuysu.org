@@ -70,7 +70,7 @@ export default function ApplicationApplicants() {
   const [resultsPerPage] = useState(15);
 
   useEffect(() => {
-    let apps = data?.applicationById?.applicants;
+    let apps = [...data?.applicationById?.applicants];
 
     if (apps) {
       if (search) {
