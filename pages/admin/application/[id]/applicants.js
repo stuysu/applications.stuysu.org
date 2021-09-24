@@ -269,23 +269,27 @@ export default function ApplicationApplicants() {
               </TableHead>
               <TableBody>
                 {applicants &&
-                  applicants.map(applicant => (
-                    <TableRow
-                      key={applicant.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {applicant.user.name}
-                      </TableCell>
-                      <TableCell align="right">
-                        {applicant.user.email}
-                      </TableCell>
-                      <TableCell align="right">
-                        {applicant.anonymityId}
-                      </TableCell>
-                      <TableCell align="right">{applicant.status}</TableCell>
-                    </TableRow>
-                  ))}
+                  applicants
+                    .slice(resultsPerPage * (page - 1), resultsPerPage * page)
+                    .map(applicant => (
+                      <TableRow
+                        key={applicant.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {applicant.user.name}
+                        </TableCell>
+                        <TableCell align="right">
+                          {applicant.user.email}
+                        </TableCell>
+                        <TableCell align="right">
+                          {applicant.anonymityId}
+                        </TableCell>
+                        <TableCell align="right">{applicant.status}</TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
           </TableContainer>
