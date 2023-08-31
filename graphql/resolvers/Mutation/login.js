@@ -19,7 +19,9 @@ export default async (_, { idToken }, { signedIn, setCookie }) => {
     // If the user updated their account update locally
     user.firstName = idTokenPayload.given_name;
     user.lastName = idTokenPayload.family_name;
-    user.picture = idTokenPayload.picture;
+    user.picture =
+      idTokenPayload.picture ||
+      "https://res.cloudinary.com/stuyactivities/image/upload/v1693526145/placeholder_pfp.png";
     user.email = idTokenPayload.email.toLowerCase();
 
     await user.save();
@@ -30,7 +32,9 @@ export default async (_, { idToken }, { signedIn, setCookie }) => {
       firstName: idTokenPayload.given_name,
       lastName: idTokenPayload.family_name,
       email: idTokenPayload.email,
-      picture: idTokenPayload.picture,
+      picture:
+        idTokenPayload.picture ||
+        "https://res.cloudinary.com/stuyactivities/image/upload/v1693526145/placeholder_pfp.png",
       adminPrivileges: false,
     });
   }
