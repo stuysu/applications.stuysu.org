@@ -41,7 +41,7 @@ export default function UserProvider({ children }) {
       }
 
       alert(
-        "There was an error loading session information. Try refreshing the page."
+        `There was an error loading session information. Try refreshing the page. If this doesn't work, email it@stuysu.org with a screenshot of this error message: "${error.message}"`
       );
     }
   }, [error]);
