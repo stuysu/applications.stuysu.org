@@ -7,7 +7,7 @@ ARG IMGBB_API_KEY
 ARG BUILD_MONGO_URL
 ENV MONGO_URL=$BUILD_MONGO_URL
 ENV NODE_ENV production
-RUN npm install --production && npm cache clean --force && npm run build --if-present
+RUN npm install --production && npm cache clean --force
 ENV PORT 80
 EXPOSE 80
 CMD [ "npm", "start" ]
