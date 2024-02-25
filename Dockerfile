@@ -10,4 +10,4 @@ ENV NODE_ENV production
 RUN npm install --production && npm cache clean --force
 ENV PORT 80
 EXPOSE 80
-CMD [ "npm", "start" ]
+CMD [ "sh", "-c", "npm run build && npm run start" ]
